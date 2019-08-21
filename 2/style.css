@@ -148,7 +148,7 @@ nav{
 }
 .dd{
     color: black;
-    background: radial-gradient(rgba(240,234,241,1),rgba(255,255,255,1));
+    background: linear-gradient(rgba(240,234,241,1),rgba(255,255,255,1))
 }
 .author{
     position: absolute;
