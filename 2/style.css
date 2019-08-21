@@ -175,11 +175,133 @@ nav{
 .profile{
     height: 50vh;
     margin: auto;
-    margin-left: 150px;
-    width: 50%;
+    margin-left: 350px;
+    width: 25%;
 }
 .profile img{
     height: 100%;
     width: 100%;
     object-fit: cover;
+    filter: drop-shadow(0px 5px 5px black);
+}
+.story-description, .work-description{
+    width: 50%;
+}
+.story-description h3 ,.work-description h3{
+    font-size: 36px;
+    padding-bottom: 30px;
+}
+.story-description p , .work-description p {
+    font-size: 20px;
+    padding: 20px 0px;
+}
+.work-gallery{
+    display: grid;
+    grid-template-columns: 150px 150px 300px;
+    height: 50vh;
+    width: 25%;
+    margin-right: 240px;
+}
+.gallery1,.gallery2,.gallery3,.gallery4,.gallery5,.gallery6{
+    width: 100%;
+    height: 100%;
+    border: solid 1px white;
+    filter: drop-shadow(0px 0px 3px black);
+}
+/* -- Responsive -- */
+@media(max-width:1024px){
+    body,html{
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: none !important;
+        overflow-x: hidden;
+    }
+    .page{
+        grid-template-columns: 5% 1fr 5%;
+        grid-template-rows: 2fr 1fr;
+        align-items: center;
+    }
+    .hero{
+        grid-column: 2/3;
+        height: auto;
+    }
+    .details{
+        grid-column: 2/3;
+        grid-row: 2/3;
+        text-align: center;
+    }
+    .details h1{
+        font-size: 46px;
+        padding-top: 10px;
+    }
+    .details h2{
+        font-size: 25px;
+        padding-top: 5px;
+    }
+    .details p {
+        font-size: 10px;
+        padding-top: 10px;
+    }
+    .pages{
+        position:absolute;
+        top: 42%;
+    }
+    .pages > div{
+        display: flex;   
+        margin: 10px;
+        padding-top: 25px;
+        align-items: center;
+        justify-content: flex-end;
+    }
+    .pages h3{
+        padding: 15px;
+        font-size: 21px;
+    }
+    @keyframes dot{
+        0%{
+            transform: scale(2);
+        }
+        100%{
+            transform: scale(2.5);
+        }
+    }
+    .story,.my-work{
+        flex-direction: column;
+    }
+    .story-description, .work-description{
+        width: 100%;
+    }
+    .banner{
+        height: auto;
+    }
+    .banner img{
+        object-position: auto auto;
+    }
+    .author h1{
+        font-size: 33px;
+    }
+    .author h3{
+        font-size: 18px;
+    }
+    .story,.my-work{
+        padding: 50px;
+        padding-left: 25px;
+    }
+    .story-description h3, .work-description h3{
+        font-size: 25px; 
+    }
+    .story-description p  , .work-description p {
+        font-size: 15px
+    }
+    .profile{
+        margin-left: 25px;
+        width: 75%;
+    }
+    .work-description{
+        margin-top: -75px;
+    }
+    .work-gallery{
+        grid-template-columns: repeat(auto-fit, minmax(125px,1fr));
+        width: 100%;
+    }
 }
