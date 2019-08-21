@@ -1,0 +1,315 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+body,html {
+    font-family: 'Poppins', sans-serif;
+    height: 100%;
+}
+button { 
+    font-family: 'Poppins', sans-serif;
+}
+header {
+    display: flex;
+    margin: auto;
+    width: 90%;
+    height: 10vh;
+    align-items: center;
+}
+.logo-container,.nav-links,.cart{
+    display: flex;
+}
+.logo{
+    font-weight: 400;
+    margin: 4px;
+}
+.nav-links{
+    justify-content: space-around;
+    list-style: none;
+}
+.nav-link{
+    color: #5f5f79;
+    font-size: 18px;
+    text-transform: uppercase;
+    display: inline-block;
+    position: relative;
+    text-decoration: none;
+    opacity: 0.75;
+} 
+.nav-link::before {
+    transition: 300ms;
+    height: 5px;
+    content: "";
+    position: absolute;
+    background-color: #031D44;
+    width: 0%;
+    bottom: -5px;
+}
+  
+.nav-link:hover::before {
+    width: 100%;
+}
+.logo-container {
+    flex: 1;
+}
+.logo-container img{
+    margin-top: 4px;
+}
+nav {
+    flex: 2;
+}
+.cart {
+    flex: 1;
+    justify-content: flex-end;
+    cursor: pointer;
+}
+.presentation{
+    display: flex;
+    width: 90%;
+    margin: auto;
+    min-height: 100%;
+    align-items: center;
+}
+.cover img{
+    height: 80vh;
+    filter: drop-shadow(0px 5px 3px black);
+    animation: drop 1.5s ease;
+}
+.introduction{
+    flex: 1;
+    min-height: 100%;
+}
+.cover{
+    flex: 1;
+}
+.intro-text h1{
+    font-size: 44px;
+    font-weight: 500;
+    background:linear-gradient(to right, #494964 , #6f6f89);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.intro-text p {
+    font-size: 16px;
+    margin-top: -3px;
+    color: #585772;
+}
+.cta{
+    padding: 35px 0px 0px 0px;
+}
+.cta-select{
+    border: 2px solid #c36cbb;
+    background: transparent;
+    color: #c36cbb;
+    width: 120px;
+    height: 40px;
+    cursor: pointer;
+    font-size: 16px;
+}
+.cta-add{
+    background-color: #c36cbb;
+    width: 120px;
+    height: 40px;
+    cursor: pointer;
+    font-size: 16px;
+    border: none;
+    color: white;
+    margin: 0px 0px 0px 25px;
+}
+.big-circle{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    z-index: -1;
+    opacity: 0.3;
+    height: 90%;
+}
+.mid-circle{
+    position: absolute;
+    top: 20%;
+    right: 30%;
+    z-index: -1;
+    opacity: 0.3;
+    height: 80%;
+}
+.small-circle{
+    position: absolute;
+    bottom: -10%;
+    left: 7%;
+    z-index: -1;
+    height: 60%;
+}
+.laptop-select{
+    position: absolute;
+    right: 22%;
+    bottom: 5%;
+    justify-content: space-around;
+    display: flex;
+    width: 15%;
+}
+/* Footer */
+.footer{
+    background-color: #494964;
+    color: white;
+    height: auto;
+    min-height: 150px;
+    position: relative;
+    width: 100%;
+    margin-top: 100px;  
+}
+.footer-bottom{
+    background-color: #c36cbb;
+    color: white;
+    height: 25px;
+    bottom: 0px;
+    left: 0px;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+}
+.footer-content{
+    padding-bottom: 120px;
+    display: flex;
+}
+.footer-section-about, .footer-section-links , .footer-section-contact{
+    flex: 1;
+}
+@keyframes drop{
+    0%{
+        opacity: 0;
+        transform: translateY(-80px);
+    }
+    100%{
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+@media screen and (max-width : 1024px){
+    .presentation{
+        flex-direction: column;
+        margin-right: 50px;
+    }
+    .introduction{
+        margin-top: 25px;
+        padding: 0px 0px 0px 25px;
+        text-align: center;
+    }
+    .intro-text h1{
+        font-size: 25px;
+    }
+    .intro-text p {
+        font-size: 14px;
+    }
+    .cta{
+        padding: 10px 0px 0px 0px;
+    }
+    .cta-add,.cta-select{
+        margin-top: 15px;
+        margin-left: 20px;
+        width: 120px;
+        height: 40px;
+        font-size: 16px;
+        font-weight: 500;
+    }
+    .cover img{
+        height: 55vh;
+        margin-top: -15px;
+        margin-left: 50px;
+        display: flex;
+    }
+    .laptop-select{
+        position: absolute;
+        right: 30%;
+        bottom: 5%;
+        justify-content: space-around;
+        display: flex;
+        width: 40%;
+    }
+    .big-circle{
+        position: absolute;
+        top: 0px;
+        right: -50px;
+        z-index: -1;
+        opacity: 0.3;
+        height: 50%;
+    }
+    .mid-circle{
+        position: absolute;
+        top: 30%;
+        right: 0%;
+        z-index: -1;
+        opacity: 0.3;
+        height: 50%;
+    }
+    .small-circle{
+        position: absolute;
+        bottom: -15%;
+        left: -15%;
+        z-index: -1;
+        height: 50%;
+    }
+    .logo-container img{
+        margin-top: 15px;
+    }
+    .burger div{
+        width: 25px;
+        height: 3px;
+        background-color: #494964;
+        margin: 5px;
+        margin-left: 25px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    .nav-link{
+        color: white;
+    }
+    body{
+        overflow-x: hidden;
+        overflow-y: hidden;
+    }
+    .nav-links{
+        position: absolute;
+        right: -50px;
+        height: 105vh;
+        background-color: #494964;
+        top: 8vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 50%;
+        z-index: 1;
+        transform: translateX(100%);
+        transition: transform 0.5s ease-in;
+    }
+    .nav-link:hover::before{
+        background-color: #c36cbb;
+    }
+    .nav-links li{
+        opacity: 1;
+    }
+    .nav-active{
+        transform: translateX(0%);
+    }
+    @keyframes navLinkFade {
+        from{
+            opacity: 0;
+            transform: translateX(50px);
+        }
+        to{
+            opacity: 1;
+            transform: translateX(0px);
+        }
+    }
+    .toggle .line1{
+        transform: rotate(-45deg) translate(-5px,6px);
+    }
+    .toggle .line2{
+        opacity: 0;
+    }
+    .toggle .line3{
+        transform: rotate(45deg) translate(-5px,-6px);
+    }
+    
+}

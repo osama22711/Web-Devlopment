@@ -1,0 +1,185 @@
+*,*::before,*::after{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+/*---Model---*/
+.model-left, .model-right{
+    width: 40%;
+    height: 80%;
+}
+/*---Burger Menu---*/
+.burger div{
+    background-color:white;
+    margin: 5px;
+    margin-left: 25px;
+    cursor: pointer;
+}
+.line1{
+    width: 35px;
+    height: 3px;
+}
+.line2{
+    width: 25px;
+    height: 3px;
+}
+.line3{
+    width: 15px;
+    height: 3px;
+}
+/*---Fonts---*/
+@font-face{
+    font-family: PopLight;
+    src: url("./Poppins/Poppins-Light.ttf")
+}
+@font-face{
+    font-family: PopRegular;
+    src: url("./Poppins/Poppins-Regular.ttf")
+}
+/*---Bodyy waow---*/
+body{
+    font-family: PopLight;
+}
+.portofolio{
+    color: white;
+    background: radial-gradient(rgba(43,55,96,1),rgba(11,16,35,1));
+}
+nav{
+    min-height: 10vh;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0px;
+    width: 90%;
+    margin: auto;
+    align-content: center;
+}
+.logo{
+    font-size: 20px;
+}
+.page {
+    min-height: 90vh;
+    display: grid;
+    grid-template-columns: 5% 1fr 1fr 1fr 5%;
+}
+.hero{
+    overflow: hidden;
+    align-self: center;
+    justify-self: center;
+    display: flex;
+    margin-left: 30px;
+}
+.hero img{
+    transition: transform 0.3s ease-out;
+    cursor: pointer;
+}
+.model-right{
+    transform: translate(0%,10%);
+}
+.model-left{
+    transform: translate(0%,-10%);
+}
+.hero:hover .model-right{
+    transform: translate(0%,0%);
+}
+.hero:hover .model-left{
+    transform: translate(0%,0%);
+}
+.details{
+    grid-column: 2/3;
+    align-self: end;
+}
+.details h1{
+    font-size: 65px;
+    font-family: PopRegular;
+}
+.details h2{
+    font-size: 42px;
+    padding: 20px 0px;
+}
+.details p{
+    font-size: 24px;
+    padding: 20px 0px 50px 0px;
+}
+.pages{
+    right: 5%;
+    top: 50%;
+    position: absolute;
+    transform: translateY(-50%);
+}
+.pages > div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.pages h3{
+    font-size: 24px;
+    padding: 30px;
+}
+.pages svg{
+    cursor: pointer;
+    transform:scale(2);
+    opacity: 0.5;
+}
+.pages svg:hover{
+    animation: dot 0.5s ease-in-out infinite alternate;
+}
+.pages svg.active{
+    opacity: 1;
+}
+@keyframes dot{
+    0%{
+        transform: scale(2);
+    }
+    100%{
+        transform: scale(4);
+    }
+}
+/*---photo.html---*/
+.banner{
+    height: 50vh;
+    width: 100%;
+    position: relative;
+}
+.banner img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: -20% 70%;
+}
+.dd{
+    color: black;
+    background: radial-gradient(rgba(240,234,241,1),rgba(255,255,255,1));
+}
+.author{
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%,-80%);
+    color: white;
+    text-shadow: 2px 2px 2px rgba(0,0,0,0.5);
+    text-align: center;
+}
+.author h1{
+    font-size: 42px;
+}
+.author h3{
+    font-size: 24px;
+}
+.story,.my-work{
+    margin: auto;
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    padding: 90px;
+}
+.profile{
+    height: 50vh;
+    margin: auto;
+    margin-left: 150px;
+    width: 50%;
+}
+.profile img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
