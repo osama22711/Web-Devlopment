@@ -7,6 +7,7 @@
 .model-left, .model-right{
     width: 40%;
     height: 80%;
+    filter: drop-shadow(0px 0px 7px black);
 }
 /*---Burger Menu---*/
 .burger div{
@@ -80,9 +81,11 @@ nav{
 }
 .hero:hover .model-right{
     transform: translate(0%,0%);
+    filter: drop-shadow(0px 0px 0px black);
 }
 .hero:hover .model-left{
     transform: translate(0%,0%);
+    filter: drop-shadow(0px 0px 0px black);
 }
 .details{
     grid-column: 2/3;
