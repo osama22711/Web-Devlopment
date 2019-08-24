@@ -70,7 +70,6 @@ body{
 .square-box-online , .square-box-offline{
   padding: 10px; 
   width: 100px;
-  resize: both;
   overflow: auto;
   display: flex;
   margin-right: 20px;
@@ -88,7 +87,6 @@ body{
 .longSquare-box{
   padding: 10px; 
   width: 200px;
-  resize: both;
   overflow: auto;
   display: flex;
   background-color: #BAC2D9;
