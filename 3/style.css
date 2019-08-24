@@ -126,7 +126,8 @@ body{
     margin-top: -10px;
 }
 .card-img img {
-    width: 100%;
+    width: 120px;
+    height: 181px;
 }
 .cards-top , .cards-bot{
     display: flex;
@@ -151,6 +152,12 @@ body{
     border-radius: 50%;
     border: none;
     display: inline-block;
+}
+.card-mid-left .status{
+    background-color: green;
+}
+.card-mid-right .status{
+    background-color: gray;
 }
 .call-message{
     display: flex;
@@ -179,20 +186,15 @@ body{
 }
 .text-top , .text-mid , .text-bot{
     display: flex;
+    justify-content: flex-start;
     margin-bottom: 0px;
+    margin-left: 130px;
 }
 .text-top{
-    margin-left: 145px;
     margin-top: -150px;
 }
 .text-mid , .text-bot{
     margin-top: 35px;
-}
-.text-mid{
-    margin-left: 143px;
-}
-.text-bot{
-    margin-left: 120px;
 }
 .info-top , .info-mid , .info-bot{
     padding-left: 5px;
