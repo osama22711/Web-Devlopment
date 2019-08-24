@@ -3,8 +3,8 @@ function init(){
     const online = document.querySelector(".square-box-online");
     const offline = document.querySelector(".square-box-offline");
     const request = document.querySelector(".longSquare-box");
-    const call = document.querySelector(".call-box");
-    const message = document.querySelector(".message-box");
+    const calls = document.querySelectorAll(".call-box");
+    const messages = document.querySelectorAll(".message-box");
     online.addEventListener("click", function() {
         header.style.backgroundColor = 'rgba(152, 191, 157, 0.25)';
         header.style.filter = 'drop-shadow(0px 10px 3px rgba(34, 94, 42, 0.2)';
@@ -17,11 +17,15 @@ function init(){
         header.style.backgroundColor = 'rgba(186,194,217, 0.25)';
         header.style.filter = 'drop-shadow(0px 10px 3px rgba(109, 112, 123, 0.2)';
     });
-    call.addEventListener("click", function() {
-        alert("Not Added To Friendlist !..");
+    calls.forEach((call, index) => {
+        call.addEventListener("click", function() {
+          alert("Not In Your Friendlist !..");
+        });
     });
-    message.addEventListener("click", function() {
-        alert("Not Added To Friendlist !..");
+    messages.forEach((message, index) => {
+        message.addEventListener("click", function() {
+          alert("Not In Your Friendlist !..");
+        });
     });
 }
 
