@@ -4,7 +4,7 @@ function init(){
     const offline = document.querySelector(".square-box-offline");
     const request = document.querySelector(".longSquare-box");
     const calls = document.querySelectorAll(".call-box");
-    const messages = document.querySelectorAll(".message-box");
+    const messages = document.querySelectorAll(".message-box"); 
     online.addEventListener("click", function() {
         header.style.backgroundColor = 'rgba(152, 191, 157, 0.25)';
         header.style.filter = 'drop-shadow(0px 10px 3px rgba(34, 94, 42, 0.2)';
