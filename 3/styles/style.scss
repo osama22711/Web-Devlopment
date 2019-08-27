@@ -71,28 +71,6 @@ body{
 // ::placeholder{
 //     color: white;
 // }
-.search{
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    margin-top: 40px;
-    height: 50px;
-    width: 250px;
-    border: none;
-    border-radius: 25px;
-    font-size: 20px;
-    filter: drop-shadow(0px 0px 3px black);
-    &:focus {
-         outline-width: 0;
-         padding-left: 20px;
-     }
-}
-.search-.button{
-    position: relative;
-    left: 60%;
-    transform: translateX(-50%);
-    margin-top: 60px;
-}
 .tb
 {
     display: table;
@@ -103,37 +81,34 @@ body{
 {
     display: table-cell;
     vertical-align: middle;
+    input:focus{
+        outline-width: 0;
+    }
 }
 
 input, .botton
 {
     color: #fff;
-    font-family: Nunito;
+    font-family: 'Poppins';
     padding: 0;
     margin: 0;
     border: 0;
     background-color: transparent;
 }
-
+.search-section{
+    display: flex;
+    justify-content: center;
+}
 #cover
 {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    width: 550px;
+    width: 750px;
     padding: 35px;
-    margin: -83px auto 0 auto;
-    background-color: #ff7575;
-    border-radius: 50px;
-    box-shadow: 0 10px 40px #ff7c7c, 0 0 0 20px #ffffffeb;
-    transform: scale(0.6);
+    background-color: #0583F2;
+    border-radius: 100px;
+    box-shadow: 0 10px 40px  #0583F2, 0 0 0 20px #ffffffeb;
+    transform: scale(0.35);
 }
 
-form
-{
-    height: 96px;
-}
 
 input[type="text"]
 {
@@ -145,7 +120,7 @@ input[type="text"]
 
 input[type="text"]::placeholder
 {
-    color: #e16868;
+    color: white;
 }
 
 #s-cover
@@ -156,6 +131,7 @@ input[type="text"]::placeholder
 
 .botton
 {
+    transform: scale(0.8);
     position: relative;
     display: block;
     width: 84px;
@@ -168,8 +144,8 @@ input[type="text"]::placeholder
     position: relative;
     top: -8px;
     left: 0;
-    width: 43px;
-    height: 43px;
+    width: 70px;
+    height: 70px;
     margin-top: 0;
     border-width: 15px;
     border: 15px solid #fff;
@@ -242,8 +218,98 @@ input[type="text"]::placeholder
     width: 40px;
     background-color: #fff;
 }
-
-
+// Cards //
+section{
+    justify-content: center;
+}
+.cards-top{
+    margin-top: -2%;
+}
+.img-con{
+    margin-left: 50px;
+    margin-top: 50px;
+    height: 30px;
+    width: 30px;
+}
+.cards-top , .cards-bot{
+    display: flex;
+    .card-left , .card-mid-left , .card-mid-right , .card-right{
+        padding: 10px;
+        margin: 25px 15px 0px 15px; 
+        width: 375px;
+        height: 270px;
+        overflow: hidden;
+        opacity: 1;
+        background-color: white;
+        box-shadow: 0px 0px 50px 0px rgba(0,0,0,0.5);
+        z-index: 1;
+    }
+    img {
+        transform: scale(4);
+        width: 100%;
+        border-radius: 50%;  
+    }
+    .status{
+        position: absolute;
+        height: 15px;
+        width: 15px;
+        background-color: #A60311;
+        border-radius: 50%;
+        border: none;
+        display: inline-block;
+    }
+    .card-mid-left .status{
+        background-color: green;
+    }
+    .card-mid-right .status{
+        background-color: gray;
+    }
+    .call-message{
+        display: flex;
+    }
+    .call-box{
+        margin-left: 40px;
+        margin-top: 10px;
+        margin-right: 15px;
+        width: 127px;
+        height: 40px;
+        border: solid 1px #707070;
+        color: #0583F2;
+        text-align: center;
+        padding-top: 7px;
+        cursor: pointer;
+    }
+    .message-box{
+        margin-top: 10px;
+        width: 127px;
+        height: 40px;
+        color: white;
+        background-color: #0583F2;
+        text-align: center;
+        padding-top: 7px;
+        cursor: pointer;
+    }
+    .text-top , .text-mid , .text-bot{
+        display: flex;
+        justify-content: flex-start;
+        margin-bottom: 10px;
+        margin-left: 140px;
+        font-family: PopLight;
+    }
+    .text-top{
+        margin-top: -50px;
+    }
+    .left-top , .left-mid , .left-bot{
+        color:#0583F2;
+        font-size: 15px;
+        font-weight: 500;
+    }
+    .info-top , .info-mid , .info-bot{
+        font-size: 16px;
+        font-weight: 500;
+        margin-left: 5px;
+    }
+}
 // Responsive fix // 
 
 @media (max-width: 576px) {
