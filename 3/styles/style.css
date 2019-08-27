@@ -280,8 +280,8 @@ section {
   overflow: hidden;
   opacity: 1;
   background-color: white;
-  -webkit-box-shadow: 0px 0px 50px 0px rgba(0, 0, 0, 0.5);
-          box-shadow: 0px 0px 50px 0px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0px 0px 20px 0px #98bf9d;
+          box-shadow: 0px 0px 20px 0px #98bf9d;
   z-index: 1;
 }
 
@@ -363,7 +363,7 @@ section {
 }
 
 .cards-top .info-top, .cards-top .info-mid, .cards-top .info-bot, .cards-bot .info-top, .cards-bot .info-mid, .cards-bot .info-bot {
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 500;
   margin-left: 5px;
 }
