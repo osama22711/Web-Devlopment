@@ -5,11 +5,11 @@
 }
 @font-face{
     font-family: PopLight;
-    src: url("../2/Poppins/Poppins-Light.ttf")
+    src: url("../../2/Poppins/Poppins-Light.ttf")
 }
 @font-face{
     font-family: PopRegular;
-    src: url("../2/Poppins/Poppins-Regular.ttf")
+    src: url("../../2/Poppins/Poppins-Regular.ttf")
 }
 body{
     font-family: PopLight;
@@ -20,7 +20,7 @@ body{
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('./img/BG.jpg');
+    background-image: url('../img/BG.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: 100%;

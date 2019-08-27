@@ -4,219 +4,99 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="style.css">
-    <title>Test</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./styles/style.css">
+    <title>Test for Takwin</title>
 </head>
 <body>
+    <!-- Background Image -->
     <div class="page"></div>
-        <div class="header">
-            <div class="aa">
-            <div class="logo-container">
-                <div class="image-holder">
-                <img src="./img/1.jpg" alt="User">
-                </div>
-                <h4 class="logo">Osama Albawab</h4>
+
+    <!-- Header -->
+	<nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
+            <div class="container-fluid">
+                    <div class="qq">
+                    <div class="logo-container">
+                            <a href="#" class="navbar-brand"><img src="../3/img/11.jpg" alt="Logo"></a>
+                            <h4 class="logo">Osama Albawab</h4>
+                    </div>
+                    </div>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+                            <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse squares" id="navbarResponsive">
+                    <div class="navbar-nav ml-auto">
+                    <button type="button" class="btn btn-success">ONLINE</button>
+                    <button type="button" class="btn btn-danger online">OFFLINE</button>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-secondary request-leave dropdown-toggle" 
+                               data-toggle="dropdown">
+                               REQUEST LEAVE <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                               <li><a class="dropdown-item" href="#">With Reason</a></li>
+                               <li class="dropdown-divider"></li>
+                               <li><a class="dropdown-item" href="#">Without Reason</a></li>
+                            </ul>
+                         </div>
+                    </div>
+                    </div>
             </div>
-            </div>
-            <div class="squares">
-                <div class='square-box-online'>
-                        <div class='square-content'><p>ONLINE</p></div>
-                </div>
-                <div class='square-box-offline'>
-                        <div class='square-content'><p>OFFLINE</p></div>
-                </div>
-                <div class='longSquare-box' onclick="function submenu()">
-                    <div class='square-content-long'><p>REQUEST LEAVE</p></div>
-                </div>
-            </div>
-        </div>
-        <main>
-            <section class="search-section">
-                    <div class='roundedSquare-box'>
-                            <input class="search" type="text" placeholder="Search..">
+            <!-- Note: you need to make the navbar burger menu more beautiful on responsive -->
+    </nav>
+
+    <!-- Search Section -->
+<main>
+        <div id="cover">
+                <form method="get" action="">
+                  <div class="tb">
+                    <div class="td"><input type="text" placeholder="Search" required></div>
+                    <div class="td" id="s-cover">
+                      <button class="botton" type="submit">
+                        <div id="s-circle"></div>
+                        <span></span>
+                      </button>
                     </div>
-            </section>
-            <section class="cards-top">
-                <div class="card-left">
-                    <div class="status"></div>
-                    <div class="card-img">
-                        <img src="./img/2.jpg" alt="User">
+                  </div>
+                </form>
+              </div>
+        <!-- <div class="s003">
+                <form>
+                  <div class="inner-form">
+                    <div class="input-field first-wrap">
+                      <div class="input-select">
+                        <select data-trigger="" name="choices-single-defaul">
+                          <option placeholder="">Category</option>
+                          <option>Development</option>
+                          <option>Design</option>
+                        </select>
+                      </div>
                     </div>
-                    <div class="text-top">
-                        <p class="left-top">Last Seen : </h4>
-                        <h4 class="info-top">30 Secs Ago</p>
+                    <div class="input-field second-wrap">
+                      <input id="search" type="text" placeholder="Enter Keywords?" />
                     </div>
-                    <div class="text-mid">
-                        <p class="left-mid">Name : </h4>
-                        <h4 class="info-mid">Rakesh Mostafa</p>
+                    <div class="input-field third-wrap">
+                      <button class="btn-search" type="button">
+                        <svg class="svg-inline--fa fa-search fa-w-16" aria-hidden="true" data-prefix="fas" data-icon="search" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                          <path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"></path>
+                        </svg>
+                      </button>
                     </div>
-                    <div class="text-bot">
-                        <p class="left-bot">Department : </h4>
-                        <h4 class="info-bot">Devlopment</p>
-                    </div>
-                    <div class="call-message">
-                    <div class="call-box"><p>CALL</p></div>
-                    <div class="message-box">MESSAGE</div>
-                    </div>
-                </div>
-                <div class="card-mid-left">
-                    <div class="status"></div>
-                    <div class="card-img">
-                        <img class="img3" src="./img/3.jpg" alt="User">
-                    </div>
-                    <div class="text-top">
-                        <p class="left-top">Last Seen : </h4>
-                        <h4 class="info-top">Online</p>
-                    </div>
-                    <div class="text-mid">
-                        <p class="left-mid">Name : </h4>
-                        <h4 class="info-mid">Abo Belal Al-Homsi</p>
-                    </div>
-                    <div class="text-bot">
-                        <p class="left-bot">Department : </h4>
-                        <h4 class="info-bot">Devlopment</p>
-                    </div>
-                    <div class="call-message">
-                    <div class="call-box"><p>CALL</p></div>
-                    <div class="message-box">MESSAGE</div>
-                    </div>
-                </div>
-                <div class="card-mid-right">
-                    <div class="status"></div>
-                    <div class="card-img">
-                        <img  src="./img/4.jpg" alt="User">
-                    </div>
-                    <div class="text-top">
-                        <p class="left-top">Last Seen : </h4>
-                        <h4 class="info-top">Away</p>
-                    </div>
-                    <div class="text-mid">
-                        <p class="left-mid">Name : </h4>
-                        <h4 class="info-mid">Sameer Ahmad</p>
-                    </div>
-                    <div class="text-bot">
-                        <p class="left-bot">Department : </h4>
-                        <h4 class="info-bot">Devlopment</p>
-                    </div>
-                    <div class="call-message">
-                    <div class="call-box"><p>CALL</p></div>
-                    <div class="message-box">MESSAGE</div>
-                    </div>
-                </div>
-                <div class="card-right">
-                    <div class="status"></div> 
-                    <div class="card-img">
-                        <img src="./img/2.jpg" alt="User">
-                    </div> 
-                    <div class="text-top">
-                        <p class="left-top">Last Seen : </h4>
-                        <h4 class="info-top">30 Secs Ago</p>
-                    </div>
-                    <div class="text-mid">
-                        <p class="left-mid">Name : </h4>
-                        <h4 class="info-mid">Rakesh Mostafa</p>
-                    </div>
-                    <div class="text-bot">
-                        <p class="left-bot">Department : </h4>
-                        <h4 class="info-bot">Devlopment</p>
-                    </div>
-                    <div class="call-message">
-                    <div class="call-box"><p>CALL</p></div>
-                    <div class="message-box">MESSAGE</div>
-                    </div>
-                </div>
-            </section>
-            <section class="cards-bot">
-                <div class="card-left">
-                    <div class="status"></div>
-                    <div class="card-img">
-                        <img src="./img/2.jpg" alt="User">
-                    </div>
-                    <div class="text-top">
-                        <p class="left-top">Last Seen : </h4>
-                        <h4 class="info-top">30 Secs Ago</p>
-                    </div>
-                    <div class="text-mid">
-                        <p class="left-mid">Name : </h4>
-                        <h4 class="info-mid">Rakesh Mostafa</p>
-                    </div>
-                    <div class="text-bot">
-                        <p class="left-bot">Department : </h4>
-                        <h4 class="info-bot">Devlopment</p>
-                    </div>
-                    <div class="call-message">
-                    <div class="call-box"><p>CALL</p></div>
-                    <div class="message-box">MESSAGE</div>
-                    </div>
-                </div>
-                <div class="card-mid-left">
-                    <div class="status"></div>
-                    <div class="card-img">
-                        <img src="./img/2.jpg" alt="User">
-                    </div> 
-                    <div class="text-top">
-                        <p class="left-top">Last Seen : </h4>
-                        <h4 class="info-top">30 Secs Ago</p>
-                    </div>
-                    <div class="text-mid">
-                        <p class="left-mid">Name : </h4>
-                        <h4 class="info-mid">Rakesh Mostafa</p>
-                    </div>
-                    <div class="text-bot">
-                        <p class="left-bot">Department : </h4>
-                        <h4 class="info-bot">Devlopment</p>
-                    </div>
-                    <div class="call-message">
-                    <div class="call-box"><p>CALL</p></div>
-                    <div class="message-box">MESSAGE</div>
-                    </div>
-                </div>
-                <div class="card-mid-right">
-                    <div class="status"></div>
-                    <div class="card-img">
-                        <img src="./img/2.jpg" alt="User">
-                    </div> 
-                    <div class="text-top">
-                        <p class="left-top">Last Seen : </h4>
-                        <h4 class="info-top">30 Secs Ago</p>
-                    </div>
-                    <div class="text-mid">
-                        <p class="left-mid">Name : </h4>
-                        <h4 class="info-mid">Rakesh Mostafa</p>
-                    </div>
-                    <div class="text-bot">
-                        <p class="left-bot">Department : </h4>
-                        <h4 class="info-bot">Devlopment</p>
-                    </div>
-                    <div class="call-message">
-                    <div class="call-box"><p>CALL</p></div>
-                    <div class="message-box">MESSAGE</div>
-                    </div>
-                </div>
-                <div class="card-right">
-                    <div class="status"></div>
-                    <div class="card-img">
-                        <img src="./img/2.jpg" alt="User">
-                    </div> 
-                    <div class="text-top">
-                        <p class="left-top">Last Seen : </h4>
-                        <h4 class="info-top">30 Secs Ago</p>
-                    </div>
-                    <div class="text-mid">
-                        <p class="left-mid">Name : </h4>
-                        <h4 class="info-mid">Rakesh Mostafa</p>
-                    </div>
-                    <div class="text-bot">
-                        <p class="left-bot">Department : </h4>
-                        <h4 class="info-bot">Devlopment</p>
-                    </div>
-                    <div class="call-message">
-                    <div class="call-box"><p>CALL</p></div>
-                    <div class="message-box">MESSAGE</div>
-                    </div>
-                </div>
-            </section>
-        </main>
-        <script src="app.js"></script>
-    </body>
+                  </div>
+                </form>
+              </div> -->
+              <!-- <input class="form-control mr-sm-2 search" type="search" placeholder="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0 search-button" type="submit">Search</button> -->
+
+    <!-- Cards Top -->
+
+
+    <!-- Cards Bottom -->
+
+</main>
+    <!-- Sources -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
 </html>
