@@ -294,8 +294,8 @@ section {
 
 .cards-top .status, .cards-bot .status {
   position: absolute;
-  height: 15px;
-  width: 15px;
+  height: 12px;
+  width: 12px;
   background-color: #A60311;
   border-radius: 50%;
   border: none;
