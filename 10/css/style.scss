@@ -1,0 +1,46 @@
+h1{
+    font-family: 'Roboto';
+    text-align: center;
+    color: white;
+}
+
+.s1{
+    background: url(../img/florian-klauer-LmkaYtMpNS8-unsplash.jpg);
+    background-size: cover;
+    h1{
+        font-size: 2rem;
+    }
+}
+.s2{
+    background: url(../img/markus-spiske-W3iFJ-LAzNo-unsplash.jpg);
+    background-size: cover;
+    h1{
+        text-align: left;
+        margin-left: 2em;
+        font-size: 4rem;
+    }
+}
+.s3{
+    background: url(../img/omar-prestwich-ZzGFUVMV-ao-unsplash.jpg);
+    background-size: cover;
+    h1{
+        text-align: left;
+        margin-left: 2em;
+        font-size: 2rem;
+    }
+}
+span{
+    background: white !important;
+}
+h2.heading{
+    position: absolute;
+    color: white;
+    font-size: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    font-family: Roboto;
+}
+.fp-slidesNav.fp-bottom{
+    margin-left: 48% !important;
+}
