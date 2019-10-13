@@ -2,6 +2,7 @@ UI / UX DESIGN
 WITH
 FRONT END DEVELOPMENT
 
+THIS WAS FIRST CREATED BACK IN 21/08/2019 , GOOD OLD DAYSSS ! :D
 
 Extra small (xs) devices (portrait phones, less than 576px)
 No media query since this is the default in Bootstrap
