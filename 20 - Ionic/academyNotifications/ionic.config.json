@@ -1,0 +1,8 @@
+{
+  "name": "academyNotifications",
+  "integrations": {
+    "cordova": {},
+    "capacitor": {}
+  },
+  "type": "angular"
+}
