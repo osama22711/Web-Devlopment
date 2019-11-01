@@ -1,0 +1,7 @@
+.info-img {
+  max-height: 30vh;
+  -o-object-fit: contain;
+     object-fit: contain;
+  padding: 10px;
+}
+/*# sourceMappingURL=movie-details.page.css.map */

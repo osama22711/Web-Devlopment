@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "movies.page.scss"
+    ],
+    "names": [],
+    "file": "movies.page.css"
+}

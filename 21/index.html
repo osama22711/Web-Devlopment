@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Photo Gallery - Colcade.js</title>
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>My Photographs</h1>
+      <div class="grid">
+        <div class="grid-col grid-col--1"></div>
+        <div class="grid-col grid-col--2"></div>
+        <div class="grid-col grid-col--3"></div>
+        <div class="grid-item">
+          <div class="content">
+            <h2>Airplane</h2>
+          </div>
+          <img src="imgs/1.jpg" alt="picture" />
+        </div>
+        <div class="grid-item">
+          <div class="content">
+            <h2>Airplane</h2>
+          </div>
+          <img src="imgs/2.jpg" alt="picture" />
+        </div>
+        <div class="grid-item">
+          <div class="content">
+            <h2>Airplane</h2>
+          </div>
+          <img src="imgs/3.jpg" alt="picture" />
+        </div>
+        <div class="grid-item">
+          <div class="content">
+            <h2>Airplane</h2>
+          </div>
+          <img src="imgs/4.jpg" alt="picture" />
+        </div>
+        <div class="grid-item">
+          <div class="content">
+            <h2>Airplane</h2>
+          </div>
+          <img src="imgs/5.jpg" alt="picture" />
+        </div>
+        <div class="grid-item">
+          <div class="content">
+            <h2>Airplane</h2>
+          </div>
+          <img src="imgs/6.jpg" alt="picture" />
+        </div>
+        <div class="grid-item">
+          <div class="content">
+            <h2>Airplane</h2>
+          </div>
+          <img src="imgs/7.jpg" alt="picture" />
+        </div>
+        <div class="grid-item">
+          <div class="content">
+            <h2>Airplane</h2>
+          </div>
+          <img src="imgs/8.jpg" alt="picture" />
+        </div>
+        <div class="grid-item">
+          <div class="content">
+            <h2>Airplane</h2>
+          </div>
+          <img src="imgs/9.jpg" alt="picture" />
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/colcade@0/colcade.js"></script>
+    <script>
+      var colc = new Colcade('.grid', {
+        columns: '.grid-col',
+        items: '.grid-item'
+      });
+    </script>
+  </body>
+</html>

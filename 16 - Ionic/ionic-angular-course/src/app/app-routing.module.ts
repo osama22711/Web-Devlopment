@@ -7,6 +7,8 @@ const routes: Routes = [
   { path: 'auth', loadChildren: './auth/auth.module#AuthPageModule' },
   { path: 'places', loadChildren: './places/places.module#PlacesPageModule', canLoad: [AuthGuard] },
   { path: 'bookings', loadChildren: './bookings/bookings.module#BookingsPageModule', canLoad: [AuthGuard] },
+  { path: 'aa', loadChildren: './aa/aa.module#AaPageModule' },
+  { path: 'test-res', loadChildren: './read-test/test/test-res/test-res.module#TestResPageModule' },
 ];
 
 @NgModule({

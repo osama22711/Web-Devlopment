@@ -1,0 +1,17 @@
+ion-content {
+  background: url(../../assets/imgs/astro-astronomy-background-956999.jpg) no-repeat center fixed;
+  background-size: cover;
+}
+
+ion-content:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: -webkit-gradient(linear, left top, right bottom, from(#02362c), to(#003199));
+  background-image: linear-gradient(to bottom right, #02362c, #003199);
+  opacity: .6;
+}
+/*# sourceMappingURL=add-note.page.css.map */
