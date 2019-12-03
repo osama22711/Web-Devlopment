@@ -1,0 +1,347 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <pthread.h>
+#include <semaphore.h>
+#define n 10
+#define threadNumber 3
+
+typedef struct pcb
+{
+
+  int id;
+
+  int priority;
+  struct pcb *next;
+
+  struct pcb *prev;
+
+} pcb_t;
+
+typedef struct queue
+{
+
+  pcb_t *front;
+
+  pcb_t *rear;
+
+  pcb_t *pcb_table[n];
+
+  int state;
+
+} que_t;
+
+
+que_t
+init_queue (que_t * qq)
+{
+
+  qq->front = NULL;
+
+  qq->rear = NULL;
+
+  return *qq;
+
+};
+
+
+
+pcb_t
+init_pcb (pcb_t * pp)
+{
+
+  pp->id = rand () % 10 + 1;
+
+  pp->priority = rand () % 5 + 1;
+
+  return *pp;
+
+};
+
+
+
+void
+print_list (pcb_t * head)
+{
+
+  pcb_t *current = head;
+
+  while (current != NULL)
+
+    {
+
+      printf ("%d\n", current->id);
+
+      current = current->next;
+
+    }
+
+};
+
+
+void
+enqueue (pcb_t * pp, que_t * qq)
+{
+
+  if (qq->front == NULL && qq->rear == NULL)
+
+    {
+
+      qq->rear = pp;
+
+      qq->front = pp;
+
+      pp->next = NULL;
+
+    }
+
+  else
+
+    {
+
+      qq->rear->next = pp;
+
+      qq->rear = pp;
+
+      pp->next = NULL;
+
+    }
+
+
+};
+
+
+
+void
+dequeue (que_t * qq)
+{
+
+  if (qq->front == NULL && qq->rear == NULL)
+
+    {
+
+      printf ("Queue is Empty\n");
+
+    }
+
+  else
+
+    {
+
+      pcb_t *temp = qq->front;
+
+      qq->front = qq->front->next;
+
+      printf ("Removed item is: %d\n", temp->id);
+
+    }
+
+}
+
+int
+isFull (que_t * qq)
+{
+
+  int full = 0;
+
+  if (qq->rear->priority == n - 1)
+
+    {
+
+      full = 1;
+
+    }
+
+  return full;
+
+}
+
+
+int
+isEmpty (que_t * qq)
+{
+
+  int empty = 0;
+
+  if (qq->front == qq->rear + 1)
+
+    {
+
+      empty = 1;
+
+    }
+
+  return empty;
+
+}
+
+
+void insert(pcb_t *pp, que_t *qq) {
+        que_t check;
+        check.state = qq->state;
+        check.front = qq->front;
+        check.rear = qq->front;
+
+        if (qq->front == NULL && qq->rear == NULL) {
+                enqueue(pp, qq);
+        }
+        else if (qq->rear->priority < pp->priority) {
+                enqueue(pp, qq);
+        }
+        else if (qq->front->priority > pp->priority) {
+                qq->front = pp;
+                pp->next = check.front;
+                printf("%d added to queue.\n", pp->id);
+        }
+        else if (qq->front->priority < pp->priority) {
+                while (check.front->priority < pp->priority && check.front->next != NULL) {
+                        check.front = check.front->next;
+                }
+                while (check.rear->next != check.front) {
+
+                        check.rear = check.rear->next;
+                }
+                check.rear->next = pp;
+                if (check.front == NULL) {
+                        pp->next = NULL;
+                }
+                else {
+                        pp->next = check.front;
+                        printf("%d added to queue.\n", pp->id);
+                }
+        }
+        else {
+                printf("Error!");
+        }
+}
+
+
+void delete(pcb_t *pp, que_t *qq) {
+        pcb_t *temp = qq->front;
+        if (qq->front == NULL && qq->rear == NULL) {
+                printf("Queue is Empty!");
+        }
+        else if (pp->id == qq->front->id) {
+                dequeue(qq);
+        }
+        else if (pp->id == qq->rear->id) {
+                while (temp->next->next != NULL) {
+                        temp = temp->next;
+                }
+                temp->next = NULL;
+                qq->rear = temp;
+        }
+        else {
+                while (pp->id != temp->next->id) {
+                        temp = temp->next;
+                }
+                temp->next = temp->next->next;
+        }
+}
+
+
+void
+Print (que_t * qq)
+{
+
+  pcb_t *pp;
+
+  printf ("Print: ");
+
+  for (pp = qq->front; pp != 0; pp = pp->next)
+
+    {
+
+      printf ("%d ", pp->id);
+
+    }
+
+  putchar ('\n');
+
+}
+
+sem_t sem_fcfs, sem_pb; 
+
+void fcfsFunction(int id) 
+{ 
+    sem_wait(&sem_fcfs);
+    /* Critical Section */
+    sleep(2);
+    /* Logic Goes Here */
+    printf("check_in for fcfs process %i\n",id);
+    int i;
+    que_t queue;
+    queue.state = 1;
+    init_queue (&queue);
+    pcb_t Array[10];
+    for (i=1; i<= 3;i++) {
+    pcb_t pp=init_pcb(&pp);
+    pp.id=i;
+    Array[i]=pp;
+    }
+    enqueue(&Array[2], &queue);
+    enqueue(&Array[1], &queue);
+    enqueue(&Array[3], &queue);
+    printf("FCFS Queue");
+    Print(&queue);
+    /* End Of Critical Section */
+    sem_post(&sem_fcfs);
+} 
+void pbFunction(int id) 
+{ 
+    sem_wait(&sem_pb);
+    /* Critical Section */
+    sleep(2);
+    /* Logic Goes Here */
+    printf("check_in for pb process %i\n",id);
+    int j;
+    que_t queue;
+    queue.state = 1;
+    init_queue (&queue);
+    pcb_t Array[10];
+    for (j=4; j<=6; j++) {
+        pcb_t pp=init_pcb(&pp);
+        pp.id=j;
+        pp.priority=j;
+        Array[j]=pp;
+    }
+     insert(&Array[5], &queue);
+     insert(&Array[4], &queue);
+     insert(&Array[6], &queue);
+     printf("Priority Based Queue");
+    Print(&queue);
+    /* End Of Critical Section*/
+    sem_post(&sem_pb);
+} 
+
+void *startExecution(void *num)
+
+{
+
+    int id = *(int *)num;
+    
+    printf("hello process %i\n",id);
+    fcfsFunction(id);
+    pbFunction(id);
+    
+    printf("good bye process %i!\n",id);
+
+}
+
+int
+main ()
+{
+    int rc,i ;
+    pthread_t threads[threadNumber];
+    int threads_id[threadNumber];
+    sem_init(&sem_pb, 0, threadNumber); 
+    sem_init(&sem_fcfs, 0, threadNumber); 
+    /* for(i=0 ; i< threadNumber ; i++)
+     {*/
+        threads_id[0]=0;
+        rc = pthread_create(&threads[0], NULL,startExecution, (void *) &threads_id[0]);
+        rc = pthread_join(threads[0], NULL);
+    /* }*/
+    
+    return 0;
+}
