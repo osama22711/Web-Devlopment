@@ -4,17 +4,21 @@
 #include <pthread.h>
 #include <semaphore.h>
 #define n 10
-#define threadNumber 3
+#define Allocated 1
+#define UnAllocated 0
+#define READY 1
+#define BLOCKED 0
 
 typedef struct pcb
 {
 
   int id;
-
   int priority;
   struct pcb *next;
-
   struct pcb *prev;
+  int state;
+  int alloc;
+  int type;
 
 } pcb_t;
 
@@ -260,88 +264,105 @@ Print (que_t * qq)
 
 }
 
-sem_t sem_fcfs, sem_pb; 
+sem_t mutex;
+pcb_t pcb_table[n];
+que_t queue;
 
-void fcfsFunction(int id) 
-{ 
-    sem_wait(&sem_fcfs);
-    /* Critical Section */
-    sleep(2);
-    /* Logic Goes Here */
-    printf("check_in for fcfs process %i\n",id);
-    int i;
-    que_t queue;
-    queue.state = 1;
-    init_queue (&queue);
+void fcfsFunction(int i) 
+{
     pcb_t Array[10];
-    for (i=1; i<= 3;i++) {
     pcb_t pp=init_pcb(&pp);
     pp.id=i;
-    Array[i]=pp;
-    }
-    enqueue(&Array[2], &queue);
-    enqueue(&Array[1], &queue);
-    enqueue(&Array[3], &queue);
+    pcb_table[i]=pp;
+    enqueue(&pcb_table[i], &queue);
     printf("FCFS Queue");
     Print(&queue);
-    /* End Of Critical Section */
-    sem_post(&sem_fcfs);
 } 
-void pbFunction(int id) 
+void pbFunction(int i) 
 { 
-    sem_wait(&sem_pb);
-    /* Critical Section */
-    sleep(2);
-    /* Logic Goes Here */
-    printf("check_in for pb process %i\n",id);
-    int j;
-    que_t queue;
-    queue.state = 1;
-    init_queue (&queue);
+    printf("check_in for pb process %i\n",i);
     pcb_t Array[10];
-    for (j=4; j<=6; j++) {
-        pcb_t pp=init_pcb(&pp);
-        pp.id=j;
-        pp.priority=j;
-        Array[j]=pp;
-    }
-     insert(&Array[5], &queue);
-     insert(&Array[4], &queue);
-     insert(&Array[6], &queue);
+    pcb_t pp=init_pcb(&pp);
+    pp.id=i;
+    pp.priority=pcb_table[i].priority;
+    pcb_table[i]=pp;
+    insert(&pcb_table[i], &queue);
      printf("Priority Based Queue");
     Print(&queue);
-    /* End Of Critical Section*/
-    sem_post(&sem_pb);
 } 
 
-void *startExecution(void *num)
+void *scheduler(void *num)
 
 {
-
+    sem_wait(&mutex);
+    /* Critical Section */
+    /* Logic Goes Here */
     int id = *(int *)num;
+    int type = pcb_table[id].type;
+    printf("type is %d\n",type);
     
-    printf("hello process %i\n",id);
+/*int i; pcb_t* pt;
+for(i=0; i<n; i++) {
+    pt=&pcb_table[i];
+    if(pt->alloc != Allocated) {
+        printf('am i getting exec!?');
+        pthread_create(&pcb_table[i], NULL,scheduler, (void *) &pcb_table[i]);
+        break;
+    }
+}*/
+        
+    if(type==0) {
+    printf("ID = 0 , TYPE is FCFS\n");
     fcfsFunction(id);
+    } else if (type==1) {
+    printf("ID = 1 , TYPE is Priorty\n");
     pbFunction(id);
+    } else {
+        printf("There is no such type!\n");
+    }    
     
-    printf("good bye process %i!\n",id);
+    /* Logic Ends Here */
+    /* End Of Critical Section*/
+    sem_post(&mutex);
+}
 
+void block(int pid) {
+    pcb_table[pid].state = BLOCKED;
+    printf("%d is BLOCKED\n",pid);
+    /* scheduler((void *)&pid+1); */
+}
+
+void unblock(int pid) {
+    pcb_table[pid].state = READY;
+    printf('%d is READY\n',pid);
+}
+
+int make_proc(int address , int type , int prio) {
+    int id = address;
+    int value = type;
+    pthread_t threads[n];
+    pcb_table[id].id = value;
+    pcb_table[id].priority = prio;
+    pcb_table[id].alloc = Allocated;
+    pcb_table[id].type = type;
+    
+    
+    printf("hello process %i\n",address);
+    pthread_create(&threads[id], NULL,scheduler, (void *)&address);
+    pthread_join(threads[id], NULL);
+    printf("good bye process %i!\n",address);
 }
 
 int
 main ()
 {
-    int rc,i ;
-    pthread_t threads[threadNumber];
-    int threads_id[threadNumber];
-    sem_init(&sem_pb, 0, threadNumber); 
-    sem_init(&sem_fcfs, 0, threadNumber); 
-    /* for(i=0 ; i< threadNumber ; i++)
-     {*/
-        threads_id[0]=0;
-        rc = pthread_create(&threads[0], NULL,startExecution, (void *) &threads_id[0]);
-        rc = pthread_join(threads[0], NULL);
-    /* }*/
+    sem_init(&mutex, 0, n); 
+    
+    make_proc(0,1,1);
+    make_proc(1,0,0);
+    make_proc(2,1,0);
+    make_proc(3,0,2);
+    
     
     return 0;
 }
