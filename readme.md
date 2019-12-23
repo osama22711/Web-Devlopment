@@ -1,20 +1,24 @@
-UI / UX DESIGN 
-WITH
-FRONT END DEVELOPMENT
+/////////////////////
+******* This Contains Every Javascript Project I have created for fun / practice *******
+/////////////////////
 
-THIS WAS FIRST CREATED BACK IN 21/08/2019 , GOOD OLD DAYSSS ! :D
+            UI / UX DESIGN 
+            WITH
+            FRONT END DEVELOPMENT
 
-Extra small (xs) devices (portrait phones, less than 576px)
-No media query since this is the default in Bootstrap
+            THIS WAS FIRST CREATED BACK IN 21/08/2019 , GOOD OLD DAYSSS ! :D
 
-Small (sm) devices (landscape phones, 576px and up)
-@media (min-width: 576px) { ... }
+            Extra small (xs) devices (portrait phones, less than 576px)
+            No media query since this is the default in Bootstrap
 
-Medium (md) devices (tablets, 768px and up)
-@media (min-width: 768px) { ... }
+            Small (sm) devices (landscape phones, 576px and up)
+            @media (min-width: 576px) { ... }
 
-Large (lg) devices (desktops, 992px and up)
-@media (min-width: 992px) { ... }
+            Medium (md) devices (tablets, 768px and up)
+            @media (min-width: 768px) { ... }
 
-Extra (xl) large devices (large desktops, 1200px and up)
-@media (min-width: 1200px) { ... }
+            Large (lg) devices (desktops, 992px and up)
+            @media (min-width: 992px) { ... }
+
+            Extra (xl) large devices (large desktops, 1200px and up)
+            @media (min-width: 1200px) { ... }
