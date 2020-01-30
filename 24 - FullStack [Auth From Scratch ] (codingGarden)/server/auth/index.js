@@ -15,7 +15,8 @@ const schema = Joi.object({
     .max(30)
     .required(),
   password: Joi.string()
-    .min(6)
+    .trim()
+    .min(10)
     .required()
 });
 
@@ -41,20 +42,26 @@ router.post('/signup', (req, res) => {
         // if user is undefined, username is not in the db, otherwise duplicate user
         if (user) {
           // there is already a user in the db with this username...
-          const err = new Error(
+          const error = new Error(
             'That username is not OG. Please choose another one'
           );
-          next(err);
+          next(error);
         } else {
           // hash the password
-          // insert the user with the hashed password
-
-          // [NOTE] - i was having problems here
           bcrypt.hash(req.body.password, 12).then(hashedPassword => {
-            res.json({ hashedPassword });
+            // insert the user with the hashed password
+            const newUser = {
+              username: req.body.username,
+              password: hashedPassword
+            };
+
+            users.insert(newUser).then(insertedUser => {
+              delete insertedUser.password;
+              res.json(insertedUser);
+            });
           });
         }
-        res.json({ user });
+        // res.json({ user });
       });
   } else {
     next(result.error); // send it to the error handler
