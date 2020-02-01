@@ -1,5 +1,8 @@
 const express = require('express');
 const volleyball = require('volleyball');
+const cors = require('cors');
+
+require('dotenv').config();
 
 const app = express();
 
@@ -7,10 +10,15 @@ const auth = require('./auth');
 
 app.use(volleyball);
 app.use(express.json());
+app.use(
+  cors({
+    origin: 'http://localhost:8080',
+  }),
+);
 
 app.get('/', (req, res) => {
   res.json({
-    message: 'Hello World!'
+    message: 'Hello World!',
   });
 });
 
@@ -26,7 +34,7 @@ function errorHandler(err, req, res, next) {
   res.status(res.statusCode || 500);
   res.json({
     message: err.message,
-    stack: err.stack
+    stack: err.stack,
   });
 }
 
