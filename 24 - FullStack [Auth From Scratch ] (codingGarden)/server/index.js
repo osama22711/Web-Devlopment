@@ -5,7 +5,7 @@ const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
-
+const middlewares = require('./auth/middlewares');
 const auth = require('./auth');
 
 app.use(volleyball);
@@ -15,13 +15,14 @@ app.use(
     origin: 'http://localhost:8080',
   }),
 );
+app.use(middlewares.checkTokenSetUser);
 
 app.get('/', (req, res) => {
   res.json({
-    message: 'Hello World!',
+    message: '🎉✨ Hello World! 🎉✨',
+    user: req.user,
   });
 });
-
 app.use('/auth', auth);
 
 function notFound(req, res, next) {
