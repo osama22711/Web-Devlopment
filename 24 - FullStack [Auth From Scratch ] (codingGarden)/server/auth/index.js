@@ -25,6 +25,8 @@ function createTokenSendResponse(user, res, next) {
   const payload = {
     _id: user._id,
     username: user.username,
+    role: user.role,
+    active: user.active,
   };
   jwt.sign(
     payload,
@@ -78,6 +80,8 @@ router.post('/signup', (req, res, next) => {
             const newUser = {
               username: req.body.username,
               password: hashedPassword,
+              role: 'user',
+              active: true,
             };
 
             users.insert(newUser).then((insertedUser) => {
@@ -107,7 +111,7 @@ router.post('/login', (req, res, next) => {
         username: req.body.username,
       })
       .then((user) => {
-        if (user) {
+        if (user && user.active) {
           // found the user in the db ... so it exists
           // now we compare the password
           bcrypt.compare(req.body.password, user.password).then((result) => {

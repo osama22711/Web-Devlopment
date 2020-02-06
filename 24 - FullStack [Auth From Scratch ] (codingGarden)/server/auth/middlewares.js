@@ -24,13 +24,26 @@ function isLoggedIn(req, res, next) {
   if (req.user) {
     next();
   } else {
-    const error = new Error('Un-Authorized! 🎈');
-    res.status(401);
-    next(error);
+    unAuthorized(res, next);
+  }
+}
+
+function unAuthorized(res, next) {
+  const error = new Error('Un-Authorized! 🎈');
+  res.status(401);
+  next(error);
+}
+
+function isAdmin(req, res, next) {
+  if (req.user.role === 'admin') {
+    next();
+  } else {
+    unAuthorized(res, next);
   }
 }
 
 module.exports = {
   checkTokenSetUser,
   isLoggedIn,
+  isAdmin,
 };
