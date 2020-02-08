@@ -6,8 +6,8 @@ const helmet = require('helmet');
 require('dotenv').config();
 
 const app = express();
-const middlewares = require('./auth/middlewares');
-const auth = require('./auth');
+const middlewares = require('./auth/auth.middlewares');
+const auth = require('./auth/auth.routes');
 const notes = require('./api/notes');
 const users = require('./api/users');
 
@@ -48,7 +48,4 @@ function errorHandler(err, req, res, next) {
 app.use(notFound);
 app.use(errorHandler);
 
-const port = process.env.PORT || 5000;
-app.listen(port, () => {
-  console.log('Listening on port', port);
-});
+module.exports = app;

@@ -2,6 +2,7 @@ const express = require('express');
 const Joi = require('joi');
 
 const db = require('../db/connection');
+
 const notes = db.get('notes');
 
 const schema = Joi.object({
@@ -16,13 +17,13 @@ const schema = Joi.object({
 
 const router = express.Router();
 
-router.get('/', (req, res, next) => {
+router.get('/', (req, res) => {
   notes
     .find({
       user_id: req.user._id,
     })
-    .then((notes) => {
-      res.json(notes);
+    .then((results) => {
+      res.json(results);
     });
 });
 
@@ -34,8 +35,8 @@ router.post('/', (req, res, next) => {
       ...req.body,
       user_id: req.user._id,
     };
-    notes.insert(note).then((note) => {
-      res.json(note);
+    notes.insert(note).then((createdNote) => {
+      res.json(createdNote);
     });
   } else {
     const error = new Error(result.error);

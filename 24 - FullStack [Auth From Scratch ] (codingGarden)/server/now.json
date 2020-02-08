@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "name": "auth-from-scratch",
+  "env": {
+    "DB_URL": "@auth-scratch-db",
+    "DEFAULT_ADMIN_PASSWORD": "@defadminpass",
+    "TOKEN_SECRET": "@tokensecret"
+  },
+  "builds": [
+    {
+      "src": "src/index.js",
+      "use": "@now/node-server"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/.*",
+      "dest": "src/index.js"
+    }
+  ],
+  "alias": ["auth-from-scratch"]
+}
