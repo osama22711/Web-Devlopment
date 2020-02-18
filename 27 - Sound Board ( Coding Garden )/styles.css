@@ -1,0 +1,26 @@
+body {
+  text-align: center;
+  font-family: sans-serif;
+  color: #fafafa;
+  background-color: #696464;
+  font-size: 1vw;
+}
+
+.container {
+  margin: 0px 3em 0px 3em;
+}
+
+h1 {
+  font-size: 3vw;
+}
+
+.sound {
+  text-align: center;
+  border: 2px solid #fdc57b;
+  border-radius: 20px;
+  background-color: #33313b;
+  color: #fafafa;
+  margin: 2px;
+  display: inline-block;
+  width: 20%;
+}
