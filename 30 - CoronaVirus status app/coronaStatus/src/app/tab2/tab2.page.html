@@ -1,0 +1,38 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Overall Status
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card class="card">
+    <ion-card-header class="header">Total Countries</ion-card-header>
+    <ion-card-content class="content">{{totalCountries}}</ion-card-content>
+  </ion-card>
+  <ion-card class="card">
+    <ion-card-header class="header">Total New Confirmed</ion-card-header>
+    <ion-card-content class="content">{{totalNewConfirmed}}</ion-card-content>
+  </ion-card>
+  <ion-card class="card">
+    <ion-card-header class="header">Total Confirmed</ion-card-header>
+    <ion-card-content class="content">{{totalConfirmed}}</ion-card-content>
+  </ion-card>
+  <ion-card class="card">
+    <ion-card-header class="header">Total New Deaths</ion-card-header>
+    <ion-card-content class="content">{{totalNewDeaths}}</ion-card-content>
+  </ion-card>
+  <ion-card class="card">
+    <ion-card-header class="header">Total Deaths</ion-card-header>
+    <ion-card-content class="content">{{totalDeaths}}</ion-card-content>
+  </ion-card>
+  <ion-card class="card">
+    <ion-card-header class="header">Total New Recovered</ion-card-header>
+    <ion-card-content class="content">{{totalNewRecovered}}</ion-card-content>
+  </ion-card>
+  <ion-card class="card" style="margin-bottom: 30px;">
+    <ion-card-header class="header">Total Recovered</ion-card-header>
+    <ion-card-content class="content">{{totalRecovered}}</ion-card-content>
+  </ion-card>
+</ion-content>
