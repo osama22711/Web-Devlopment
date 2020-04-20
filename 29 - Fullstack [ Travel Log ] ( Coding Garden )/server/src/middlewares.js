@@ -9,6 +9,7 @@ const errorHandler = (error, req, res, next) => {
   res.status(statusCode);
   res.json({
     message: error.message,
+    // eslint-disable-next-line no-undef
     stack: process.env.NODE_ENV === 'production' ? '🎂' : error.stack,
   });
 };

@@ -9,7 +9,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "build-android": "ionic build --release && npx cap sync && ionic capacitor run android -l --external"
   },
   "private": true,
   "dependencies": {
@@ -19,11 +20,20 @@
     "@angular/platform-browser": "~8.2.14",
     "@angular/platform-browser-dynamic": "~8.2.14",
     "@angular/router": "~8.2.14",
+    "@capacitor/android": "^1.5.1",
+    "@capacitor/core": "1.5.1",
+    "@ionic-native/admob-free": "^5.22.0",
     "@ionic-native/core": "^5.0.0",
     "@ionic-native/splash-screen": "^5.0.0",
     "@ionic-native/status-bar": "^5.0.0",
     "@ionic/angular": "^5.0.0",
+    "cordova": "^9.0.0",
+    "cordova-admob-sdk": "0.24.1",
+    "cordova-browser": "6.0.0",
+    "cordova-plugin-admob-free": "0.27.0",
+    "cordova-promise-polyfill": "0.0.2",
     "core-js": "^2.5.4",
+    "ionic": "^5.4.16",
     "lodash": "^4.17.15",
     "rxjs": "~6.5.1",
     "tslib": "^1.9.0",
@@ -35,11 +45,18 @@
     "@angular/compiler": "~8.2.14",
     "@angular/compiler-cli": "~8.2.14",
     "@angular/language-service": "~8.2.14",
+    "@capacitor/cli": "1.5.1",
     "@ionic/angular-toolkit": "^2.1.1",
     "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.9.4",
     "codelyzer": "^5.0.0",
+    "cordova-plugin-device": "^2.0.2",
+    "cordova-plugin-ionic-keyboard": "^2.2.0",
+    "cordova-plugin-ionic-webview": "^4.1.3",
+    "cordova-plugin-splashscreen": "^5.0.2",
+    "cordova-plugin-statusbar": "^2.4.2",
+    "cordova-plugin-whitelist": "^1.3.3",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~4.1.0",
@@ -52,5 +69,19 @@
     "tslint": "~5.15.0",
     "typescript": "~3.4.3"
   },
-  "description": "An Ionic project"
+  "description": "An Ionic project",
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-statusbar": {},
+      "cordova-plugin-device": {},
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-ionic-webview": {},
+      "cordova-plugin-ionic-keyboard": {},
+      "cordova-plugin-admob-free": {}
+    },
+    "platforms": [
+      "browser"
+    ]
+  }
 }

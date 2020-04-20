@@ -3,6 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import * as _ from 'lodash';
 import { countryCodes } from 'src/models/countryCodes';
+import {
+  AdMobFree,
+  AdMobFreeInterstitialConfig,
+} from '@ionic-native/admob-free/ngx';
 
 @Component({
   selector: 'app-tab1',
@@ -19,15 +23,30 @@ export class Tab1Page implements OnInit {
   private codes;
   public searchFor: string;
   private DData;
-  constructor() {
+  constructor(private adMob: AdMobFree) {
     this.codes = _.invert(countryCodes);
     this.getSummaryData().then(() => {
       this.summaryData.Countries = this.Data[this.endValue];
-      console.log(this.summaryData);
     });
   }
 
   ngOnInit() {}
+
+  ionViewDidLoad() {
+    this.launchInterstitial();
+  }
+
+  launchInterstitial() {
+    const config: AdMobFreeInterstitialConfig = {
+      isTesting: true, // Remove in production
+      autoShow: true,
+      id: 'ca-app-pub-5799650019891884/3239576439',
+    };
+    // this.adMob.interstitial.config(config);
+    // this.adMob.interstitial.prepare();
+    this.adMob.banner.config(config);
+    this.adMob.banner.prepare();
+  }
 
   onSearch(event) {
     this.searchFor = event.target.value;

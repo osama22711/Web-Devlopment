@@ -1,3 +1,4 @@
+import { AdMobFree } from '@ionic-native/admob-free//ngx';
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
@@ -15,5 +16,6 @@ import { PipesModule } from '../pipes/pipes.module';
     PipesModule,
   ],
   declarations: [Tab1Page],
+  providers: [AdMobFree],
 })
 export class Tab1PageModule {}
