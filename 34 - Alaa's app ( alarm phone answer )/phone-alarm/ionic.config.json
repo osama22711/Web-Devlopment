@@ -1,0 +1,8 @@
+{
+  "name": "phone-alarm",
+  "integrations": {
+    "capacitor": {},
+    "cordova": {}
+  },
+  "type": "angular"
+}
