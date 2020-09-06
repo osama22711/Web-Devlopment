@@ -2,8 +2,16 @@
 <widget version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <access origin="*" />
   
+  <feature name="AudioTogglePlugin">
+    <param name="android-package" value="com.dooble.audiotoggle.AudioTogglePlugin"/>
+  </feature>
+
   <feature name="CallNumber">
     <param name="android-package" value="mx.ferreyra.callnumber.CFCallNumber"/>
+  </feature>
+
+  <feature name="AudioManagement">
+    <param name="android-package" value="com.cedricclovel.audiomanagement.AudioManagement"/>
   </feature>
 
   <feature name="PhoneCallTrap">
@@ -12,6 +20,10 @@
 
   <feature name="Permissions">
     <param name="android-package" value="com.android.plugins.Permissions"/>
+  </feature>
+
+  <feature name="AudioTogglePlugin">
+    <param name="android-package" value="com.dooble.audiotoggle.AudioTogglePlugin"/>
   </feature>
 
   <feature name="PhoneCallTrap">

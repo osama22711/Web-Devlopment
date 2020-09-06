@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { CallNumber } from '@ionic-native/call-number/ngx';
+import { AudioManagement } from '@ionic-native/audio-management/ngx';
 
+declare var AudioToggle: any;
 declare var PhoneCallTrap: any;
 //phone calls
 declare var window: any;
@@ -15,10 +17,12 @@ export class MainPage implements OnInit {
   constructor(
     private androidPermissions: AndroidPermissions,
     private callNumber: CallNumber,
+    private audioman: AudioManagement,
   ) {
     // this.alarms();
-    this.checkPermissionCall();
-    console.log(window.PhoneCallTrap);
+    // this.checkPermissionCall();
+    console.log(window);
+    // this.onCall();
   }
 
   // To call a number programmitaclly ( it requests by itself )
@@ -34,6 +38,26 @@ export class MainPage implements OnInit {
   onAdd() {}
 
   onEdit() {}
+
+  onCall() {
+    this.callNumber
+      .callNumber('18001010101', true)
+      .then((res) => {
+        this.audioman
+          .setAudioMode(AudioManagement.AudioMode.NORMAL)
+          .then(() => {
+            this.audioman
+              .setVolume(AudioManagement.VolumeType.MUSIC, 15)
+              .then(() => {
+                if (window.AudioToggle) {
+                  window.AudioToggle.setAudioMode(window.AudioToggle.SPEAKER);
+                }
+              });
+          });
+        console.log('Launched dialer!', res);
+      })
+      .catch((err) => console.log('Error launching dialer', err));
+  }
 
   checkPermissionCall() {
     this.androidPermissions

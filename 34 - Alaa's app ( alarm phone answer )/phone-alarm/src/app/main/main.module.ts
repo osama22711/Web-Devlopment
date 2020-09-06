@@ -9,10 +9,11 @@ import { MainPageRoutingModule } from './main-routing.module';
 
 import { MainPage } from './main.page';
 import { CallNumber } from '@ionic-native/call-number/ngx';
+import { AudioManagement } from '@ionic-native/audio-management/ngx';
 
 @NgModule({
   imports: [CommonModule, FormsModule, IonicModule, MainPageRoutingModule],
   declarations: [MainPage],
-  providers: [AndroidPermissions, CallNumber],
+  providers: [AndroidPermissions, CallNumber, AudioManagement],
 })
 export class MainPageModule {}
