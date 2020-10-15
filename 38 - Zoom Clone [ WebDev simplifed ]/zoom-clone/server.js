@@ -1,31 +1,32 @@
-const express = require('express');
-const { on } = require('process');
-const app = express();
-const server = require('http').Server(app); // creating a server
-const io = require('socket.io')(server) // passes server to socket.io
-const { v4: uuidV4 } = require('uuid');
+const express = require('express')
+const app = express()
+const server = require('http').Server(app)
+const io = require('socket.io')(server)
+const { v4: uuidV4 } = require('uuid')
+const { PeerServer } = require('peer');
 
-app.set('view engine', 'ejs'); // ejs is html but on backend
-app.use(express.static('public'));
+const peerServer = PeerServer({ port: `${process.env.PORT || 3001}`, path: '/' });
+
+app.set('view engine', 'ejs')
+app.use(express.static('public'))
 
 app.get('/', (req, res) => {
-    res.redirect(`/${uuidV4()}`);
-});
+  res.redirect(`/${uuidV4()}`)
+})
 
 app.get('/:room', (req, res) => {
-    res.render('room', { roomId: req.params.room });
-});
+  res.render('room', { roomId: req.params.room })
+})
 
 io.on('connection', socket => {
-    socket.on('join-room', (roomId, userId) => {
-        socket.join(roomId);
-        socket.to(roomId).broadcast.emit('user-connected', userId);
+  socket.on('join-room', (roomId, userId) => {
+    socket.join(roomId)
+    socket.to(roomId).broadcast.emit('user-connected', userId)
 
-        socket.on('disconnect', () => {
-            socket.to(roomId).broadcast.emit('user-disconnected ', userId);
-        });
-    });
-});
+    socket.on('disconnect', () => {
+      socket.to(roomId).broadcast.emit('user-disconnected', userId)
+    })
+  })
+})
 
-console.log(`Server started on: http://localhost:3000`);
-server.listen(3000);
+server.listen(process.env.PORT || 3000)
