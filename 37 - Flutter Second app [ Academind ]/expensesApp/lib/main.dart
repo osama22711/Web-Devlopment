@@ -1,11 +1,19 @@
 import 'package:expensesApp/widgets/chart.dart';
 import 'package:expensesApp/widgets/new_transaction.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import './widgets/transactions_list.dart';
 import './models/transactions.dart';
 
 void main() {
+  // WidgetsFlutterBinding.ensureInitialized();
+  // SystemChrome.setPreferredOrientations(
+  //   [
+  //     DeviceOrientation.portraitDown,
+  //     DeviceOrientation.portraitUp,
+  //   ],
+  // );
   runApp(MyApp());
 }
 
@@ -60,6 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
     //   date: DateTime.now(),
     // ),
   ];
+  bool _showGrid = false;
 
   List<Transactions> get _recentTransations {
     return _userTransactions.where((tx) {
@@ -104,21 +113,51 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+    final appBar = AppBar(
+      title: Text('Personal Expenses'),
+      actions: [
+        IconButton(
+          icon: Icon(Icons.add),
+          onPressed: () => _showAddTransaction(context),
+        ),
+      ],
+    );
+    final bool _isLandscape = mediaQuery.orientation == Orientation.portrait;
+    final txChart = Container(
+      height: (mediaQuery.size.height -
+              mediaQuery.padding.top -
+              appBar.preferredSize.height) *
+          (mediaQuery.orientation == Orientation.portrait ? 0.3 : 0.7),
+      child: Chart(_recentTransations),
+    );
+    final txList = Container(
+        height: (mediaQuery.size.height -
+                mediaQuery.padding.top -
+                appBar.preferredSize.height) *
+            (mediaQuery.orientation == Orientation.portrait ? 0.7 : 0.7),
+        child: TransactionList(_userTransactions, _deleteTransaction));
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Personal Expenses'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () => _showAddTransaction(context),
-          ),
-        ],
-      ),
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Chart(_recentTransations),
-            TransactionList(_userTransactions, _deleteTransaction),
+            if (!_isLandscape)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Show grid'),
+                  Switch.adaptive(
+                      value: _showGrid,
+                      onChanged: (val) {
+                        setState(() {
+                          this._showGrid = val;
+                        });
+                      }),
+                ],
+              ),
+            if (_isLandscape) ...[txChart, txList] else
+              this._showGrid ? txChart : txList,
           ],
         ),
       ),

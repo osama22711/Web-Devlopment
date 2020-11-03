@@ -11,9 +11,8 @@ class TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 300,
-      child: transactions.isEmpty
+    return LayoutBuilder(builder: (ctx, constraints) {
+      return transactions.isEmpty
           ? Column(
               children: [
                 Text(
@@ -24,7 +23,7 @@ class TransactionList extends StatelessWidget {
                   height: 10,
                 ),
                 Container(
-                  height: 200,
+                  height: constraints.maxHeight * 0.6,
                   child: Image.asset(
                     'assets/images/waiting.png',
                     fit: BoxFit.cover,
@@ -60,15 +59,26 @@ class TransactionList extends StatelessWidget {
                     subtitle: Text(
                       DateFormat.yMMMd().format(transactions[index].date),
                     ),
-                    trailing: IconButton(
-                      icon: Icon(Icons.delete),
-                      onPressed: () =>
-                          _deleteTransaction(transactions[index].id),
-                    ),
+                    trailing: MediaQuery.of(context).size.width > 430
+                        ? FlatButton.icon(
+                            textColor: Theme.of(context).errorColor,
+                            icon: Icon(Icons.delete),
+                            label: Text(
+                              'Delete',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            onPressed: () =>
+                                _deleteTransaction(transactions[index].id),
+                          )
+                        : IconButton(
+                            icon: Icon(Icons.delete),
+                            onPressed: () =>
+                                _deleteTransaction(transactions[index].id),
+                          ),
                   ),
                 );
               },
-            ),
-    );
+            );
+    });
   }
 }
