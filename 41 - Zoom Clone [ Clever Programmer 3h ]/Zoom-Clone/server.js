@@ -1,4 +1,5 @@
 const express = require('express');
+const enforce = require('express-sslify');
 const app = express();
 
 const server = require('http').Server(app);
@@ -13,6 +14,7 @@ app.set('view engine', 'ejs');
 
 app.use(express.static('public'));
 app.use('/peerjs', peerServer);
+app.use(enforce.HTTPS({ trustProtoHeader: true }));
 
 app.get('/', (req, res) => {
     res.redirect(`/${uuidv4()}`);
