@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const enforce = require('express-sslify');
 const app = express();
 
@@ -12,9 +13,10 @@ const peerServer = ExpressPeerServer(server, {
 
 app.set('view engine', 'ejs');
 
+app.use(cors());
+// app.use(enforce.HTTPS({ trustProtoHeader: true }));
 app.use(express.static('public'));
 app.use('/peerjs', peerServer);
-app.use(enforce.HTTPS({ trustProtoHeader: true }));
 
 app.get('/', (req, res) => {
     res.redirect(`/${uuidv4()}`);
@@ -37,4 +39,4 @@ io.on('connection', socket => {
 });
 
 console.log(`App Started at http://localhost:3030`);
-server.listen(process.env.PORT || 3030);
+server.listen(process.env.PORT || 3031);

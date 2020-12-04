@@ -1,13 +1,13 @@
-const socket = io('/');
+const socket = io('quiet-reef-65924.herokuapp.com');
 const videoGrid = document.getElementById('video-grid');
 
 const myVideo = document.createElement('video');
 myVideo.muted = true;
 
 var peer = new Peer(undefined, {
-    path: '/peerjs',
+    path: '/whiteboard-30a4e/us-central1/app/peerjs',
     host: '/',
-    port: '443'
+    port: '5000'
 });
 
 let myVideoStream;
@@ -55,6 +55,14 @@ const addVideoStream = (video, stream) => {
         video.play();
     });
     videoGrid.append(video);
+    video.addEventListener('dblclick', (data) => {
+      console.log(data);
+      if (window.fullScreen) {
+        document.exitFullscreen();
+      } else {
+        video.requestFullscreen();
+      }
+    });
 }
 
 let text = $('input');
@@ -132,4 +140,12 @@ const playStop = () => {
       <span>Play Video</span>
     `
     document.querySelector('.main__video_button').innerHTML = html;
+  }
+
+  const shareScreen = () => {
+    navigator.mediaDevices.getDisplayMedia({ cursor: true }).then((stream) => {
+      const video = document.createElement('video');
+      const screenTrack = stream.getVideoTracks()[0];
+      addVideoStream(video, stream)
+    });
   }
