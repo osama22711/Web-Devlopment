@@ -10,6 +10,7 @@ const { ExpressPeerServer } = require('peer');
 const peerServer = ExpressPeerServer(server, {
     debug: true
 });
+const port = process.env.PORT || 3031;
 
 app.set('view engine', 'ejs');
 
@@ -23,13 +24,18 @@ app.get('/', (req, res) => {
 });
 
 app.get('/:room', (req,res) => {
-    res.render('room', { roomId: req.params.room });
+    res.render('room', { roomId: req.params.room, port: port });
 });
 
 io.on('connection', socket => {
+    console.log('User connected!!');
     socket.on('join-room', (roomId, userId) => {
         socket.join(roomId);
         socket.to(roomId).broadcast.emit('user-connected', userId);
+
+        socket.on('disconnect', () => {
+            socket.to(roomId).broadcast.emit('user-disconnected', userId)
+          });
 
         socket.on('message', message => {
             // emit an event to createMessage with message
@@ -38,5 +44,5 @@ io.on('connection', socket => {
     });
 });
 
-console.log(`App Started at http://localhost:3030`);
-server.listen(process.env.PORT || 3031);
+console.log(`App Started at http://localhost:${port}`);
+server.listen(port);
