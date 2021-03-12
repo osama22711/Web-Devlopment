@@ -1,0 +1,202 @@
+<nb-layout>
+  <nb-layout-header fixed>
+    <!-- Insert header here -->
+  </nb-layout-header>
+
+  <nb-sidebar>
+    <div class="video-container">
+      <img src="/assets/icons/noimage_person.png" />
+    </div>
+    <div class="chat_container">
+      <div class="chat_header">
+        <h6>Chat</h6>
+      </div>
+      <div class="chat_window">
+        <ul class="messages">
+          <div
+            #messageContainer
+            *ngFor="let message of messages$ | async; let i = index"
+            class="message-container"
+            [ngClass]="
+              message.isSender
+                ? 'message-container_sender'
+                : 'message-container_reciever'
+            "
+          >
+            <li
+              class="message"
+              [ngClass]="
+                message.isSender ? 'message_sender' : 'message_reciever'
+              "
+            >
+              <b *ngIf="!message.isSender">{{ message.username }}</b>
+              <br *ngIf="!message.isSender" />
+              {{ message.message }}
+            </li>
+          </div>
+        </ul>
+      </div>
+      <div class="chat_message_container">
+        <input
+          nbInput
+          fullWidth
+          id="chat_message"
+          type="text"
+          (keydown.enter)="sendMessage($event)"
+          placeholder="Type message here..."
+          required
+        />
+      </div>
+    </div>
+  </nb-sidebar>
+
+  <nb-layout-column>
+    <nb-card [nbSpinner]="isLoading" nbSpinnerStatus="primary">
+      <nb-card-body>
+        <div class="whiteboard">
+          <canvas
+            #whiteboard
+            (mousedown)="onMouseDown($event)"
+            (mouseup)="onMouseUp($event)"
+            (mousemove)="onMouseMove($event)"
+            (mouseout)="onMouseUp($event)"
+          ></canvas>
+        </div>
+      </nb-card-body>
+    </nb-card>
+
+    <ng-template #loginDialog let-data let-ref="dialogRef">
+      <nb-card>
+        <nb-card-header>Login to LMS</nb-card-header>
+        <nb-card-body [formGroup]="adminFormGroup">
+          <div class="form-group row" style="margin-bottom: 15px">
+            <label
+              for="roomNameInput"
+              class="label col-sm-3 col-form-label"
+              style="margin: auto"
+              >Room name</label
+            >
+            <div class="col-sm-9">
+              <input
+                style="
+                  height: 40px;
+                  width: 100%;
+                  padding-left: 10px;
+                  background-color: #f7f9fc;
+                  border-color: #e4e9f2;
+                  color: #222b45;
+                "
+                name="roomNameInput"
+                type="text"
+                nbInput
+                fullWidth
+                id="roomNameInput"
+                placeholder="Room name"
+                formControlName="roomNameInput"
+                (keydown.enter)="loginButton(ref)"
+                required
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label
+              for="userNameInput"
+              class="label col-sm-3 col-form-label"
+              style="margin: auto"
+              >User name</label
+            >
+            <div class="col-sm-9">
+              <input
+                style="
+                  height: 40px;
+                  width: 100%;
+                  padding-left: 10px;
+                  background-color: #f7f9fc;
+                  border-color: #e4e9f2;
+                  color: #222b45;
+                "
+                nbInput
+                fullWidth
+                name="userNameInput"
+                type="text"
+                id="userNameInput"
+                placeholder="Username"
+                formControlName="userNameInput"
+                (keydown.enter)="loginButton(ref)"
+                required
+              />
+            </div>
+          </div>
+        </nb-card-body>
+        <nb-card-footer>
+          <div class="row">
+            <div class="col-sm-6">
+              <button
+                nbButton
+                status="basic"
+                (click)="ref.close()"
+                size="small"
+                ghost
+                style="color: #7e889c"
+              >
+                Cancel
+              </button>
+            </div>
+            <div
+              class="col-sm-6"
+              style="display: flex; justify-content: flex-end"
+            >
+              <button
+                nbButton
+                (click)="loginButton(ref)"
+                size="small"
+                [disabled]="!adminFormGroup.valid"
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </nb-card-footer>
+      </nb-card>
+    </ng-template>
+  </nb-layout-column>
+
+  <nb-layout-footer fixed>
+    <!-- Insert footer here -->
+    <div class="container">
+      <button
+        nbButton
+        [disabled]="!authData?.isTeacher"
+        (click)="choosepdf.click()"
+      >
+        Choose a pdf
+      </button>
+      <input
+        hidden
+        type="file"
+        #choosepdf
+        accept="application/pdf, image/*"
+        (change)="onSelectFile($event)"
+      />
+      <button nbButton (click)="canvasToBlob()">Canvas to blob</button>
+    </div>
+
+    <div class="container" *ngIf="pdfFile">
+      <button
+        nbButton
+        [disabled]="isLoading || !authData?.isTeacher"
+        (click)="nextPage()"
+      >
+        Next page
+      </button>
+      <p>{{ pdfPageNumber }}/{{ pdfFile?.numPages }}</p>
+      <button
+        nbButton
+        [disabled]="isLoading || !authData?.isTeacher"
+        (click)="previousPage()"
+      >
+        Previous page
+      </button>
+    </div>
+  </nb-layout-footer>
+</nb-layout>

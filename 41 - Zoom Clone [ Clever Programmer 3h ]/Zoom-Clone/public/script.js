@@ -1,118 +1,82 @@
-const SOCKET_URL = window.location.hostname === 'localhost' ? 'ws://localhost:3031' : 'https://quiet-reef-65924.herokuapp.com';
-const PEER_URL = window.location.hostname === 'localhost' ? '/' : 'quiet-reef-65924.herokuapp.com';
-const port = PORT !== '3031' ? '443' : '3031';
-
-const socket = io(SOCKET_URL)
-const videoGrid = document.getElementById('video-grid')
+const socket = io('ws://localhost:3032');
+const videoGrid = document.getElementById('video-grid');
 const myPeer = new Peer(undefined, {
   path: '/peerjs',
-  host: PEER_URL,
-  port: port
-})
+  host: '/',
+  port: '3032',
+});
 let myVideoStream;
-const myVideo = document.createElement('video')
+const myVideo = document.createElement('video');
 myVideo.muted = true;
 const peers = {};
-
-navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
-
-navigator.mediaDevices.getUserMedia({
-  video: true,
-  audio: true
-}).then(stream => {
-  myVideoStream = stream;
-  addVideoStream(myVideo, stream)
-})
-
-myPeer.on('call', call => {
-  call.answer(myVideoStream);
-  console.log(call);
-  const video = document.createElement('video')
-  call.on('stream', userVideoStream => {
-    console.log(`inside onStream`);
-    addVideoStream(video, userVideoStream)
+navigator.mediaDevices
+  .getUserMedia({
+    video: true,
+    audio: true,
   })
+  .then((stream) => {
+    myVideoStream = stream;
+    addVideoStream(myVideo, stream);
+  });
+
+myPeer.on('call', (call) => {
+  call.answer(myVideoStream);
+  const video = document.createElement('video');
+  call.on('stream', (userVideoStream) => {
+    addVideoStream(video, userVideoStream);
+  });
 });
 
 socket.on('user-connected', (userId) => {
-  console.log(`Remote user id ${userId}`);
-  connectToNewUser(userId, myVideoStream)
-})
+  connectToNewUser(userId, myVideoStream);
+});
 // input value
-let text = $("input");
+let text = $('input');
 // when press enter send message
 $('html').keydown(function (e) {
   if (e.which == 13 && text.val().length !== 0) {
     socket.emit('message', text.val());
-    text.val('')
+    text.val('');
   }
 });
-socket.on("createMessage", message => {
-  $("ul").append(`<li class="message"><b>user</b><br/>${message}</li>`);
-  scrollToBottom()
-})
-
-socket.on('user-disconnected', userId => {
-  if (peers[userId]) peers[userId].close()
-})
-
-myPeer.on('open', id => {
-  console.log(`Local id ${id}`);
-  socket.emit('join-room', ROOM_ID, id)
+socket.on('createMessage', (message) => {
+  $('ul').append(`<li class="message"><b>user</b><br/>${message}</li>`);
+  scrollToBottom();
 });
 
-function connectToNewUser(userId, localStream) {
-  const call = myPeer.call(userId, localStream)
+socket.on('user-disconnected', (userId) => {
+  if (peers[userId]) peers[userId].close();
+});
+
+myPeer.on('open', (id) => {
+  socket.emit('join-room', ROOM_ID, id);
+});
+
+function connectToNewUser(userId, stream) {
+  const call = myPeer.call(userId, stream);
   const video = document.createElement('video');
-  console.log(`Inside connectToNewUser ${userId}`);
-  console.log(call);
-
-  myPeer.on('stream', (remoteVideoStream) => {
-    console.log('hey someone connected');
-    addVideoStream(video, remoteVideoStream)
-  })
-
-  myPeer.on('close', () => {
-    console.log(`Inside onClose`);
-    video.remove()
-  })
-
-  myPeer.on('error', function(err) {
-    console.log(`Error is ${err}`);
+  call.on('stream', (userVideoStream) => {
+    addVideoStream(video, userVideoStream);
+  });
+  call.on('close', () => {
+    video.remove();
   });
 
-  peers[userId] = call
+  peers[userId] = call;
 }
 
 function addVideoStream(video, stream) {
-  video.srcObject = stream
+  video.srcObject = stream;
   video.addEventListener('loadedmetadata', () => {
-    video.play()
-  })
-  videoGrid.append(video)
-}
-
-const shareScreen = () => {
-  navigator.mediaDevices.getDisplayMedia({ cursor: true }).then((stream) => {
-    const video = document.createElement('video');
-    const screenTrack = stream.getVideoTracks()[0];
-    addVideoStream(video, stream)
-    // Additional ----------------
-    // peers.forEach((userId) => {
-    //   connectToNewUser(userId, stream);
-    // })
+    video.play();
   });
+  videoGrid.append(video);
 }
-
-///  /////////////////////////////////////////////
-///             OTHER FUNCTIONS
-///  /////////////////////////////////////////////
 
 const scrollToBottom = () => {
   var d = $('.main__chat_window');
-  d.scrollTop(d.prop("scrollHeight"));
-}
-
+  d.scrollTop(d.prop('scrollHeight'));
+};
 
 const muteUnmute = () => {
   const enabled = myVideoStream.getAudioTracks()[0].enabled;
@@ -123,48 +87,56 @@ const muteUnmute = () => {
     setMuteButton();
     myVideoStream.getAudioTracks()[0].enabled = true;
   }
-}
+};
 
 const playStop = () => {
-  console.log('object')
+  console.log('object');
   let enabled = myVideoStream.getVideoTracks()[0].enabled;
   if (enabled) {
     myVideoStream.getVideoTracks()[0].enabled = false;
-    setPlayVideo()
+    setPlayVideo();
   } else {
-    setStopVideo()
+    setStopVideo();
     myVideoStream.getVideoTracks()[0].enabled = true;
   }
-}
+};
 
 const setMuteButton = () => {
   const html = `
     <i class="fas fa-microphone"></i>
     <span>Mute</span>
-  `
+  `;
   document.querySelector('.main__mute_button').innerHTML = html;
-}
+};
 
 const setUnmuteButton = () => {
   const html = `
     <i class="unmute fas fa-microphone-slash"></i>
     <span>Unmute</span>
-  `
+  `;
   document.querySelector('.main__mute_button').innerHTML = html;
-}
+};
 
 const setStopVideo = () => {
   const html = `
     <i class="fas fa-video"></i>
     <span>Stop Video</span>
-  `
+  `;
   document.querySelector('.main__video_button').innerHTML = html;
-}
+};
 
 const setPlayVideo = () => {
   const html = `
   <i class="stop fas fa-video-slash"></i>
     <span>Play Video</span>
-  `
+  `;
   document.querySelector('.main__video_button').innerHTML = html;
-}
+};
+
+const shareScreen = () => {
+  navigator.mediaDevices.getDisplayMedia({ cursor: true }).then((stream) => {
+    const video = document.createElement('video');
+    const screenTrack = stream.getVideoTracks()[0];
+    addVideoStream(video, stream);
+  });
+};

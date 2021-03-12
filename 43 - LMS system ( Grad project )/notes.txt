@@ -1,0 +1,9 @@
+const SOCKET_URL =
+  window.location.hostname === 'localhost'
+    ? 'ws://localhost:3032'
+    : 'https://quiet-reef-65924.herokuapp.com';
+const PEER_URL =
+  window.location.hostname === 'localhost'
+    ? '/'
+    : 'quiet-reef-65924.herokuapp.com';
+const port = PORT !== '3032' ? '443' : '3032';
