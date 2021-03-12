@@ -1,0 +1,32 @@
+{
+    "totalClients": 0,
+    "rooms": {
+        "unique_roomId": {
+            "usersCount": 0,
+            "loaded": 0,
+            "users": {
+                "unique_userId": {
+                    "id": "userId",
+                    "name": "blabla",
+                    "isLoading": false,
+                    "isTeacher": false
+                }
+            },
+            "messages": [],
+            "data": {
+                "background": {
+                    "type": null,
+                    "data": null,
+                    "page": null,
+                    "pages": null
+                },
+                "drawingArray": []
+            }
+        }
+    }
+}
+/* [TODO]: 1- Migrate to the original project [ X ]
+           2- Migrate server to the original server [ - ]
+           3- Merge code of whiteboard with videocall [ - ]
+           4- All of these with the best implementation [ - ]
+*/

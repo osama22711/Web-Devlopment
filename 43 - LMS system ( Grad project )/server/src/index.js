@@ -1,14 +1,14 @@
-const http = require('http');
-
 const app = require('./app');
-const sockets = require('./sockets');
+const vcr = require('./api/vcr');
 
-const server = http.Server(app);
-sockets.init(server);
+const port = process.env.PORT || 3031;
+const ioPort = process.env.PORT + 2 || 4000;
 
-const port = process.env.PORT || 5000;
-server.listen(port, () => {
+app.server.listen(port, () => {
+  app.io.listen(ioPort);
   /* eslint-disable no-console */
   console.log(`👂 Listening: http://localhost:${port}`);
+  console.log(`👂 Listening for SOCKET.IO at: ws://localhost:${ioPort}`);
   /* eslint-enable no-console */
+  new vcr.appService(app.io);
 });
