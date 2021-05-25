@@ -1,0 +1,214 @@
+<nb-layout>
+  <nb-layout-header fixed>
+    <!-- Insert header here -->
+    <div class="col-6">
+      <h5>LEARN</h5>
+    </div>
+    <div class="col-6 flex_end">
+      <button nbButton (click)="onCreateRoom()" status="primary">
+        Create a room
+      </button>
+    </div>
+  </nb-layout-header>
+
+  <nb-sidebar>
+    <nb-menu tag="menu" [items]="menuItems"></nb-menu>
+  </nb-sidebar>
+
+  <nb-layout-column>
+    <!-- Main layout -->
+    <nb-card>
+      <nb-card-header>Available rooms</nb-card-header>
+      <nb-card-body>
+        <div class="row" style="margin: 15px 0" *ngFor="let room of rooms">
+          <div class="col-6">
+            <b>{{ room.name }}</b>
+            <span style="display: block"
+              >Usercount: {{ room.usersCount }} users</span
+            >
+          </div>
+          <div class="col-6 flex_end">
+            <button nbButton status="primary" (click)="onJoinRoom(room)">
+              JOIN
+            </button>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+
+    <ng-template #loginDialog let-data let-ref="dialogRef">
+      <nb-card>
+        <nb-card-header>Login to LMS</nb-card-header>
+        <nb-card-body [formGroup]="adminFormGroup">
+          <div class="form-group row" style="margin-bottom: 15px">
+            <label
+              for="roomNameInput"
+              class="label col-sm-3 col-form-label"
+              style="margin: auto"
+              >Room name</label
+            >
+            <div class="col-sm-9">
+              <input
+                style="
+                  height: 40px;
+                  width: 100%;
+                  padding-left: 10px;
+                  background-color: #f7f9fc;
+                  border-color: #e4e9f2;
+                  color: #222b45;
+                "
+                name="roomNameInput"
+                type="text"
+                nbInput
+                fullWidth
+                id="roomNameInput"
+                placeholder="Room name"
+                formControlName="roomNameInput"
+                (keydown.enter)="loginButton(ref)"
+                required
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label
+              for="userNameInput"
+              class="label col-sm-3 col-form-label"
+              style="margin: auto"
+              >User name</label
+            >
+            <div class="col-sm-9">
+              <input
+                style="
+                  height: 40px;
+                  width: 100%;
+                  padding-left: 10px;
+                  background-color: #f7f9fc;
+                  border-color: #e4e9f2;
+                  color: #222b45;
+                "
+                nbInput
+                fullWidth
+                name="userNameInput"
+                type="text"
+                id="userNameInput"
+                placeholder="Username"
+                formControlName="userNameInput"
+                (keydown.enter)="loginButton(ref)"
+                required
+              />
+            </div>
+          </div>
+        </nb-card-body>
+        <nb-card-footer>
+          <div class="row">
+            <div class="col-sm-6">
+              <button
+                nbButton
+                status="basic"
+                (click)="ref.close()"
+                size="small"
+                ghost
+                style="color: #7e889c"
+              >
+                Cancel
+              </button>
+            </div>
+            <div
+              class="col-sm-6"
+              style="display: flex; justify-content: flex-end"
+            >
+              <button
+                nbButton
+                (click)="loginButton('create', ref)"
+                size="small"
+                [disabled]="!adminFormGroup.valid"
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </nb-card-footer>
+      </nb-card>
+    </ng-template>
+
+    <ng-template #joinDialog let-data let-ref="dialogRef">
+      <nb-card>
+        <nb-card-header>Login to {{ data.name }}</nb-card-header>
+        <nb-card-body [formGroup]="joinFormGroup">
+          <div class="form-group row" style="margin-bottom: 15px">
+            <label
+              for="usernameInput"
+              class="label col-sm-3 col-form-label"
+              style="margin: auto"
+              >Username</label
+            >
+            <div class="col-sm-9">
+              <input
+                style="
+                  height: 40px;
+                  width: 100%;
+                  padding-left: 10px;
+                  background-color: #f7f9fc;
+                  border-color: #e4e9f2;
+                  color: #222b45;
+                "
+                name="usernameInput"
+                type="text"
+                nbInput
+                fullWidth
+                id="usernameInput"
+                placeholder="Username"
+                formControlName="usernameInput"
+                (keydown.enter)="loginButton(ref)"
+                required
+              />
+            </div>
+          </div>
+        </nb-card-body>
+        <nb-card-footer>
+          <div class="row">
+            <div class="col-sm-6">
+              <button
+                nbButton
+                status="basic"
+                (click)="ref.close()"
+                size="small"
+                ghost
+                style="color: #7e889c"
+              >
+                Cancel
+              </button>
+            </div>
+            <div
+              class="col-sm-6"
+              style="display: flex; justify-content: flex-end"
+            >
+              <button
+                nbButton
+                (click)="loginButton('join', ref, data)"
+                size="small"
+                [disabled]="!joinFormGroup.valid"
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </nb-card-footer>
+      </nb-card>
+    </ng-template>
+  </nb-layout-column>
+
+  <nb-layout-footer fixed>
+    <span class="created-by"
+      >Created with ♥ by
+      <b><a href="#" target="_blank">Osama</a></b>
+      2021</span
+    >
+    <!-- <div class="socials">
+      <a href="#" target="_blank" class="ion ion-social-github"></a>
+      <a href="#" target="_blank" class="ion ion-social-facebook"></a>
+      <a href="#" target="_blank" class="ion ion-social-twitter"></a>
+      <a href="#" target="_blank" class="ion ion-social-linkedin"></a>
+    </div> -->
+  </nb-layout-footer>
+</nb-layout>

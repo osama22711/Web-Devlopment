@@ -125,12 +125,6 @@
 }
 
 ::ng-deep {
-  // Custom backdrop
-  .nb-theme-default .overlay-backdrop {
-    background: rgb(0 0 0 / 80%);
-    backdrop-filter: blur(5px);
-  }
-
   nb-sidebar {
     .scrollable {
       padding: 0 !important;

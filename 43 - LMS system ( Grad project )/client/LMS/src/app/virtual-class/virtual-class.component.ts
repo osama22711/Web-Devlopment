@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { VirtualClassService } from './virtual-class.service';
 import {
   AfterViewInit,
@@ -5,16 +6,12 @@ import {
   ElementRef,
   OnDestroy,
   QueryList,
-  TemplateRef,
   ViewChild,
   ViewChildren,
 } from '@angular/core';
 import * as pdfJS from 'pdfjs-dist/es5/build/pdf.js';
 import * as pdfjsWorker from 'pdfjs-dist/es5/build/pdf.worker.entry.js';
-import { NbDialogService } from '@nebular/theme';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { authData } from '../models/auth.model';
-import peerjs from 'peerjs';
 import { message } from '../models/message.model';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -27,10 +24,7 @@ pdfJS.GlobalWorkerOptions.workerSrc = pdfjsWorker;
   styleUrls: ['./virtual-class.component.scss'],
 })
 export class VirtualClassComponent implements AfterViewInit, OnDestroy {
-  adminFormGroup: FormGroup;
-
   @ViewChild('whiteboard') private canvasRef: ElementRef;
-  @ViewChild('loginDialog') private dialogRef: TemplateRef<any>;
   @ViewChildren('messageContainer') messageContainer: QueryList<ElementRef>;
   private canvas: HTMLCanvasElement;
   private colors = document.getElementsByClassName('color');
@@ -47,34 +41,30 @@ export class VirtualClassComponent implements AfterViewInit, OnDestroy {
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   public pdfPageNumber = 1;
-  public pdfFile;
+  public pdfFile = null;
   public isLoading = false;
   public messages$: BehaviorSubject<message[]> = new BehaviorSubject([]);
 
   private myVideoStream;
   private myVideo = document.createElement('video');
   private videoGrid: HTMLElement;
-  private userId = null;
-  private myPeer = null;
   private peers = {};
 
   constructor(
-    private dialogService: NbDialogService,
-    private classService: VirtualClassService
+    private classService: VirtualClassService,
+    private router: Router
   ) {
-    this.initFormGroup();
-    this.myPeer = new peerjs(undefined, {
-      host: '/',
-      path: '/peerjs',
-      port: 3031,
-    });
-    this.myPeer.on('open', (id) => {
-      this.userId = id;
-    });
+    this.authData = this.classService.authData;
+    if (!this.authData) {
+      this.router.navigateByUrl('/');
+    }
   }
 
   connectToNewUser(userId, stream) {
-    const call = this.myPeer.call(userId, stream);
+    console.log('connectToNewUser: ', userId);
+    console.log('connectToNewUser: ', stream);
+    const call = this.classService.myPeer.call(userId, stream);
+    console.log(call);
     const video = document.createElement('video');
     call.on('stream', (userVideoStream) => {
       console.log(userVideoStream);
@@ -106,6 +96,7 @@ export class VirtualClassComponent implements AfterViewInit, OnDestroy {
     this.videoGrid = document.querySelector('.video-container');
     this.myVideo.muted = true;
 
+    // Watch messages to scroll down into view
     this.messageContainer.changes
       .pipe(takeUntil(this._destroy$))
       .subscribe((elements) => {
@@ -114,12 +105,8 @@ export class VirtualClassComponent implements AfterViewInit, OnDestroy {
         }
       });
 
-    this.listenOnAuth();
-    this.dialogService.open(this.dialogRef, {
-      closeOnEsc: false,
-      closeOnBackdropClick: false,
-      context: 'this is some additional data passed to dialog',
-    });
+    this.listenOnConnect();
+    this.onCanvasInitalization();
   }
 
   onCanvasInitalization() {
@@ -202,44 +189,48 @@ export class VirtualClassComponent implements AfterViewInit, OnDestroy {
     this.current.y = e.pageY - bounds.top - scrollY;
   }
 
-  listenOnAuth() {
-    this.classService.socket.on('auth', async (data: authData) => {
-      this.authData = data;
-      console.log(data);
+  async listenOnConnect() {
+    if (this.authData.isTeacher) {
+      this.classService.socket.on('user-connected', (userId) => {
+        console.log('User connected with id: ', userId);
+        this.connectToNewUser(userId, this.myVideoStream);
+      });
 
-      if (data.isTeacher) {
-        console.log('creating video...');
-        await navigator.mediaDevices
-          .getUserMedia({
-            video: true,
-            audio: true,
-          })
-          .then((stream) => {
-            this.myVideoStream = stream;
-            this.addVideoStream(this.myVideo, stream);
-          });
-      }
-    });
+      await navigator.mediaDevices
+        .getUserMedia({
+          video: true,
+          audio: true,
+        })
+        .then((stream) => {
+          this.myVideoStream = stream;
+          this.addVideoStream(this.myVideo, stream);
+          if (this.authData.users) {
+            this.authData.users.forEach((user) => {
+              this.connectToNewUser(user.id, this.myVideoStream);
+            });
+          }
+        });
+    }
   }
 
   listenOnCall() {
-    this.classService.socket.on('user-connected', (userId) => {
-      console.log('User connected with id: ', userId);
-      this.connectToNewUser(userId, this.myVideoStream);
-    });
-
     this.classService.socket.on('user-disconnected', (userId) => {
       console.log('user-disconnected: ', userId);
+
       if (this.peers[userId]) this.peers[userId].close();
-      const video = document.querySelector('.video-container video');
-      video.remove();
-      const icon = document.querySelector(
-        '.video-container img'
-      ) as HTMLImageElement;
-      icon.style.display = 'unset';
+
+      if (!this.authData.isTeacher) {
+        const video = document.querySelector('.video-container video');
+        video.remove();
+        const icon = document.querySelector(
+          '.video-container img'
+        ) as HTMLImageElement;
+        icon.style.display = 'unset';
+      }
     });
 
-    this.myPeer.on('call', (call) => {
+    this.classService.myPeer.on('call', (call) => {
+      console.log('Recieving call: ', call);
       call.answer(this.myVideoStream);
       const video = document.createElement('video');
       call.on('stream', (userVideoStream) => {
@@ -259,7 +250,7 @@ export class VirtualClassComponent implements AfterViewInit, OnDestroy {
   sendMessage(event) {
     const message = event.srcElement.value;
     if (message === '' || !message) return;
-    const username = this.userNameInput.value;
+    const username = this.authData.name;
     this.classService.socket.emit('message', { message, username });
     event.srcElement.value = '';
   }
@@ -332,7 +323,7 @@ export class VirtualClassComponent implements AfterViewInit, OnDestroy {
         }
         joinedData.messages.forEach((message) => {
           const isSender =
-            message.username === this.authData.name ? true : false;
+            message.username === this.authData?.name ? true : false;
           message.isSender = isSender;
         });
         this.messages$.next(joinedData.messages);
@@ -505,35 +496,6 @@ export class VirtualClassComponent implements AfterViewInit, OnDestroy {
     this.canvas.width = container.clientWidth;
     this.canvas.height = 600;
     this.canvas.style.backgroundColor = '#f3fffd';
-  }
-
-  loginButton(ref) {
-    const model = {
-      roomName: this.roomNameInput.value,
-      userName: this.userNameInput.value,
-      userId: this.userId,
-    };
-    this.classService.socket.emit('join-room', model);
-    this.onCanvasInitalization();
-    ref.close();
-  }
-
-  // ------------------
-  // Formgroup things
-  // ------------------
-
-  initFormGroup() {
-    this.adminFormGroup = new FormGroup({
-      roomNameInput: new FormControl(null, [Validators.required]),
-      userNameInput: new FormControl(null, [Validators.required]),
-    });
-  }
-
-  get roomNameInput() {
-    return this.adminFormGroup.get('roomNameInput');
-  }
-  get userNameInput() {
-    return this.adminFormGroup.get('userNameInput');
   }
 
   ngOnDestroy() {

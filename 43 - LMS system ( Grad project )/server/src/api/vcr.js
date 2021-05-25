@@ -26,6 +26,19 @@ class appService {
     );
 
     io.on('connection', (socket) => {
+      socket.on('list-rooms', () => {
+        // if (this.data.rooms.length > 0) {
+        const rooms = [];
+        const roomNames = Object.values(this.data.rooms);
+        roomNames.forEach((room, index) => {
+          rooms.push({
+            ...roomNames[index],
+          });
+        });
+        console.log('rooms is: ', rooms);
+        socket.emit('list-rooms', rooms);
+        // }
+      });
       socket.on('join-room', ({ roomName, userName, userId }) => {
         // If joined late emit current data back
 
@@ -63,18 +76,19 @@ class appService {
     const roomData = this.data?.rooms[`${roomId}`]?.data;
     // Emit mediaData back to the just joined guy
     if (roomData?.background.type || roomData?.drawingArray.length > 0) {
-      let drawingData =
+      const drawingData =
         roomData.background.type === 'pdf'
           ? roomData.drawingArray[roomData.background.page - 1]
           : roomData.drawingArray;
       const file = roomData.background;
-      const messages = this.data?.rooms[`${roomId}`].messages;
+      const messages = this.data?.rooms[`${roomId}`]?.messages;
       socket.emit('justJoinedDrawing', { file, drawingData, messages });
     }
 
     // Create roomId object if it doesnt exist
     if (!this.data.rooms[`${roomId}`]) {
       this.data.rooms[`${roomId}`] = {
+        name: roomId,
         usersCount: 0,
         loaded: 0,
         users: {},
@@ -92,8 +106,13 @@ class appService {
         isLoading: false,
         isTeacher: false,
       };
+
       if (userName.split('_')[0] === 'teacher') {
         userDoc.isTeacher = true;
+        if (this.data.rooms[`${roomId}`].usersCount > 0) {
+          const users = Object.values(this.data?.rooms[`${roomId}`].users);
+          userDoc.users = users;
+        }
       }
       this.data.rooms[`${roomId}`].users[`${userId}`] = userDoc;
       // Sending auth data (userDoc) to the user
@@ -190,7 +209,7 @@ class appService {
     if (!this.data.rooms[roomId] || this.data.rooms[roomId].length === 1) {
       delete this.data.rooms[roomId];
     } else {
-      delete this.data.rooms[roomId][userId];
+      delete this.data.rooms[roomId].users[userId];
       --this.data.rooms[roomId]['usersCount'];
       // const filtered = data[roomId].filter((id) => {
       //   return id === userId;

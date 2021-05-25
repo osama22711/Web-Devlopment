@@ -25,8 +25,16 @@
         }
     }
 }
-/* [TODO]: 1- Migrate to the original project [ X ]
-           2- Migrate server to the original server [ - ]
-           3- Merge code of whiteboard with videocall [ - ]
-           4- All of these with the best implementation [ - ]
+/* [TODO]: 
+REQUIREMENTS: 1- Create basic join room list rooms page [ X ]
+              2- Record the session and store it on the database [ - ]
+              3- Ability to watch the session [ - ]
+
+FEATURES:  1- Fix rendering pdf pages fast [ - ]
+           2- Add feature to turnoff video and audio [ - ]
+           3- Add different colors to choose from [ - ]
+           4- Add sharescreen feature [ - ]
+           5- Add tabbuttons to show users and chat [ - ]
+
+           999- Optimization and maintainability comes last [ - ]
 */

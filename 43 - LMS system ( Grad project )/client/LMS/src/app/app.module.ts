@@ -15,11 +15,20 @@ import {
   NbThemeModule,
   NbLayoutModule,
   NbSidebarModule,
+  NbMenuModule,
+  NbIconModule,
 } from '@nebular/theme';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { VirtualClassComponent } from './virtual-class/virtual-class.component';
+import { MainmenuComponent } from './mainmenu/mainmenu.component';
+import { NbEvaIconsModule } from '@nebular/eva-icons';
 
-const declarations = [AppComponent, VirtualClassComponent, NotFoundComponent];
+const declarations = [
+  AppComponent,
+  VirtualClassComponent,
+  NotFoundComponent,
+  MainmenuComponent,
+];
 
 const imports = [
   BrowserModule,
@@ -33,6 +42,10 @@ const imports = [
   NbLayoutModule,
   NbSidebarModule,
   AppRoutingModule,
+  NbMenuModule.forRoot(),
+  NbIconModule,
+  NbEvaIconsModule,
+  NbButtonModule,
 ];
 @NgModule({
   declarations: [...declarations],

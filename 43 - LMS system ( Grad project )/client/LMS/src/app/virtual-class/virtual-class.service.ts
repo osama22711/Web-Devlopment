@@ -1,3 +1,4 @@
+import { authData } from './../models/auth.model';
 import { Injectable } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Socket } from 'socket.io-client';
@@ -7,6 +8,9 @@ import { Socket } from 'socket.io-client';
 })
 export class VirtualClassService {
   public socket: Socket;
+  public myPeer = null;
+  public peerID = null;
+  public authData: authData;
 
   constructor(private storage: AngularFireStorage) {}
 

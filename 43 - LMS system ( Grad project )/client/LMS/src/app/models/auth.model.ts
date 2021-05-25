@@ -3,4 +3,5 @@ export interface authData {
   name: string;
   isLoading: boolean;
   isTeacher: boolean;
+  users?: Array<authData>;
 }
