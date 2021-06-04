@@ -104,6 +104,7 @@ export class MainmenuComponent implements AfterViewInit {
       model.userId = this.classService.peerID;
     } else if (type === 'join') {
       console.log(data);
+      this.classService.joinedRoomData = data;
       model.roomName = data.name;
       model.userName = this.usernameInput.value;
       model.userId = this.classService.peerID;

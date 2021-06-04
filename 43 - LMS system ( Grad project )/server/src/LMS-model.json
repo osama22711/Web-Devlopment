@@ -32,7 +32,7 @@ REQUIREMENTS: 1- Create basic join room list rooms page [ X ]
 
 FEATURES:  1- Fix rendering pdf pages fast [ - ]
            2- Add feature to turnoff video and audio [ - ]
-           3- Add different colors to choose from [ - ]
+           3- Add different colors to choose from [ X ]
            4- Add sharescreen feature [ - ]
            5- Add tabbuttons to show users and chat [ - ]
 

@@ -11,6 +11,7 @@ export class VirtualClassService {
   public myPeer = null;
   public peerID = null;
   public authData: authData;
+  public joinedRoomData = null;
 
   constructor(private storage: AngularFireStorage) {}
 

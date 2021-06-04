@@ -20,6 +20,9 @@
     <nb-card>
       <nb-card-header>Available rooms</nb-card-header>
       <nb-card-body>
+        <div class="row label norooms_row" *ngIf="!rooms[0]">
+          There are not any currently available rooms to join!
+        </div>
         <div class="row" style="margin: 15px 0" *ngFor="let room of rooms">
           <div class="col-6">
             <b>{{ room.name }}</b>

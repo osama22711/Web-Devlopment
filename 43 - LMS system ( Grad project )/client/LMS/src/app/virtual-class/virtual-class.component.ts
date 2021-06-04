@@ -303,6 +303,7 @@ export class VirtualClassComponent implements AfterViewInit, OnDestroy {
 
   listenOnLoading() {
     this.classService.socket.on('isLoading', (loaded) => {
+      console.log(loaded);
       this.isLoading = loaded;
     });
   }
@@ -311,6 +312,7 @@ export class VirtualClassComponent implements AfterViewInit, OnDestroy {
     this.classService.socket.on(
       'justJoinedDrawing',
       async (joinedData: joinedDrawing) => {
+        console.log(joinedData);
         this.isLoading = true;
         if (joinedData.file?.type === 'pdf') {
           await this.classService
@@ -390,9 +392,9 @@ export class VirtualClassComponent implements AfterViewInit, OnDestroy {
           this.renderTask.promise
             .then((data) => {
               this.renderTask = null;
-              if (!this.authData.isTeacher) {
-                this.classService.emitOnLoading(false, this.authData.id);
-              }
+              // if (!this.authData.isTeacher) {
+              this.classService.emitOnLoading(false, this.authData.id);
+              // }
               resolve(data);
             })
             .catch((err) => {
@@ -460,9 +462,15 @@ export class VirtualClassComponent implements AfterViewInit, OnDestroy {
   }
 
   canvasToBlob() {
-    // Needs to be maintained...
     return new Promise((resolve) => {
       this.canvas.toBlob((blob) => {
+        const anchor = document.createElement('a');
+        anchor.download = 'canvas.png';
+        anchor.href = URL.createObjectURL(blob);
+
+        anchor.click();
+
+        URL.revokeObjectURL(anchor.href);
         resolve(blob);
       }, 'image/png');
     });
@@ -488,6 +496,11 @@ export class VirtualClassComponent implements AfterViewInit, OnDestroy {
     });
 
     this.isLoading = false;
+  }
+
+  colorChange(event) {
+    const color = event.target.value;
+    this.current.color = color;
   }
 
   resetData() {

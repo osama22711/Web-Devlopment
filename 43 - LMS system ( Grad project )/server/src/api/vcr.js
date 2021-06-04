@@ -74,16 +74,6 @@ class appService {
 
   someoneJoined(socket, roomId, userId, userName) {
     const roomData = this.data?.rooms[`${roomId}`]?.data;
-    // Emit mediaData back to the just joined guy
-    if (roomData?.background.type || roomData?.drawingArray.length > 0) {
-      const drawingData =
-        roomData.background.type === 'pdf'
-          ? roomData.drawingArray[roomData.background.page - 1]
-          : roomData.drawingArray;
-      const file = roomData.background;
-      const messages = this.data?.rooms[`${roomId}`]?.messages;
-      socket.emit('justJoinedDrawing', { file, drawingData, messages });
-    }
 
     // Create roomId object if it doesnt exist
     if (!this.data.rooms[`${roomId}`]) {
@@ -118,6 +108,18 @@ class appService {
       // Sending auth data (userDoc) to the user
       socket.emit('auth', userDoc);
     }
+
+    // Emit mediaData back to the just joined guy
+    if (roomData?.background.type || roomData?.drawingArray.length > 0) {
+      const drawingData =
+        roomData.background.type === 'pdf'
+          ? roomData.drawingArray[roomData.background.page - 1]
+          : roomData.drawingArray;
+      const file = roomData.background;
+      const messages = this.data?.rooms[`${roomId}`]?.messages;
+      socket.emit('justJoinedDrawing', { file, drawingData, messages });
+    }
+
     ++this.data.rooms[`${roomId}`]['usersCount'];
     ++this.data.totalClients;
     console.log(this.data.rooms[`${roomId}`]);
@@ -136,16 +138,17 @@ class appService {
       console.log(`Loading value is ${loading}`);
 
       this.data.rooms[`${roomId}`].users[`${userId}`].isLoading = loading;
+      const usersLength = Object.entries(this.data.rooms[roomId].users).length;
 
       if (loading === false) {
         ++this.data.rooms[roomId].loaded;
       }
 
       if (
-        Math.floor(Object.entries(this.data.rooms[roomId].users).length / 2) >=
-        this.data.rooms[roomId].loaded
+        Math.floor(usersLength) === this.data.rooms[roomId].loaded ||
+        usersLength === 1
       ) {
-        console.log('inside if statement in isLoading');
+        console.log('imiting loading back');
         this.data.rooms[roomId].loaded = 0;
         socket.to(roomId).broadcast.emit('isLoading', false);
         socket.emit('isLoading', false);
