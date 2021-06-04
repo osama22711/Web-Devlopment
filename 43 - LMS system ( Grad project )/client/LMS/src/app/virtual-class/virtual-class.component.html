@@ -29,6 +29,22 @@
   <nb-sidebar>
     <div class="video-container">
       <img src="/assets/icons/noimage_person.png" />
+      <div class="video_controls">
+        <div class="row">
+          <div class="col-6" (click)="controls('mic')">
+            <!-- Active -->
+            <nb-icon icon="mic"></nb-icon>
+            <!-- Inactive -->
+            <!-- <nb-icon icon="mic-off"></nb-icon> -->
+          </div>
+          <div class="col-6" (click)="controls('video')">
+            <!-- Active -->
+            <nb-icon icon="video"></nb-icon>
+            <!-- Inactive -->
+            <!-- <nb-icon icon="video-off"></nb-icon> -->
+          </div>
+        </div>
+      </div>
     </div>
     <div class="chat_container">
       <div class="chat_header">

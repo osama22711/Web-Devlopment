@@ -7,13 +7,46 @@
   }
 }
 
+.video_controls {
+  margin: 0;
+  width: 100%;
+  height: 75px;
+  background: rgb(128 128 128 / 55%);
+  position: absolute;
+  bottom: 0;
+  transform: translateY(98%);
+  display: none;
+
+  .row {
+    height: 100%;
+    div {
+      place-content: center;
+      display: flex;
+      align-items: center;
+
+      nb-icon {
+        font-size: 35px;
+        color: white;
+      }
+    }
+  }
+}
+
 .video-container {
+  position: relative;
   height: fit-content;
   display: flex;
   flex: 0.2;
   background-color: #ecf0f1;
   display: grid;
   place-content: center;
+
+  &:hover {
+    .video_controls {
+      display: block;
+      transform: translateY(0%);
+    }
+  }
 
   img {
     width: 100px;

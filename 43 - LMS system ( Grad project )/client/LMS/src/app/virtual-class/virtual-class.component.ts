@@ -529,6 +529,15 @@ export class VirtualClassComponent implements AfterViewInit, OnDestroy {
     this.current.color = color;
   }
 
+  controls(type: string) {
+    const video = document.querySelector('video');
+    if (type === 'mic') {
+      return;
+    } else {
+      return;
+    }
+  }
+
   resetData() {
     const container = document.querySelector('.whiteboard');
     this.pdfFile = null;
