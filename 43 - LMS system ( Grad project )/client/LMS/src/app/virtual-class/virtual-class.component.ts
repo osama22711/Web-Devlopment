@@ -296,8 +296,10 @@ export class VirtualClassComponent implements AfterViewInit, OnDestroy {
   }
 
   listenOnImageFile() {
-    this.classService.socket.on('imageFile', (data) => {
-      this.placePicture(data);
+    this.classService.socket.on('imageFile', async (imageName) => {
+      await this.classService.getFile(imageName, 'img').then(async (data) => {
+        await this.placePicture(data);
+      });
     });
   }
 
@@ -318,10 +320,16 @@ export class VirtualClassComponent implements AfterViewInit, OnDestroy {
           await this.classService
             .getFile(joinedData.file?.name, 'pdf')
             .then(async (data) => {
-              await this.placePdf(data, joinedData.file?.page);
+              await this.placePdf(data, joinedData.file?.page).then(() => {
+                this.pdfPageNumber = joinedData.file.page;
+              });
             });
         } else if (joinedData.file?.type === 'image') {
-          await this.placePicture(joinedData.file?.name);
+          await this.classService
+            .getFile(joinedData.file?.name, 'img')
+            .then(async (data) => {
+              await this.placePicture(data);
+            });
         }
         joinedData.messages.forEach((message) => {
           const isSender =
@@ -336,11 +344,16 @@ export class VirtualClassComponent implements AfterViewInit, OnDestroy {
 
   placePicture(pictureData: string) {
     return new Promise((resolve) => {
+      this.isLoading = true; // Loading...
+      if (!this.authData.isTeacher) {
+        this.classService.emitOnLoading(true, this.authData.id);
+      }
       this.resetData();
       const base_image = new Image();
       base_image.src = pictureData;
       base_image.onload = () => {
         // this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.classService.emitOnLoading(false, this.authData.id);
         resolve(
           this.context.drawImage(
             base_image,
@@ -378,6 +391,15 @@ export class VirtualClassComponent implements AfterViewInit, OnDestroy {
       if (this.renderTask) {
         this.renderTask.cancel();
       }
+
+      if (!this.isLoading) {
+        this.isLoading = true; // Loading...
+
+        if (!this.authData.isTeacher) {
+          this.classService.emitOnLoading(true, this.authData.id);
+        }
+      }
+
       this.pdfFile
         .getPage(pageNumber)
         .then((page) => {
@@ -454,7 +476,11 @@ export class VirtualClassComponent implements AfterViewInit, OnDestroy {
           });
         } else {
           this.placePicture(data).then(() => {
-            this.classService.socket.emit('imageFile', data);
+            this.classService.placeFile(
+              file.name,
+              'img',
+              event.target.files[0]
+            );
           });
         }
       };

@@ -33,15 +33,19 @@ export class VirtualClassService {
                 downloaded in addition to totalPages
   // @returns Promise<any> */
 
-  placeFile(name: string, type: 'pdf' | 'img', file: any, totalPages: number) {
+  placeFile(name: string, type: 'pdf' | 'img', file: any, totalPages?: number) {
     return this.storage
       .ref(`/${type}/${name}`)
       .put(file)
       .then(() => {
-        this.socket.emit('pdfFile', {
-          pdfName: name,
-          pdfPages: totalPages,
-        });
+        if (type === 'pdf') {
+          this.socket.emit('pdfFile', {
+            pdfName: name,
+            pdfPages: totalPages,
+          });
+        } else {
+          this.socket.emit('imageFile', name);
+        }
       })
       .catch((error) => {
         console.log(error);
