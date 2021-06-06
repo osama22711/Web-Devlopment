@@ -199,7 +199,7 @@ export class VirtualClassComponent implements AfterViewInit, OnDestroy {
       await navigator.mediaDevices
         .getUserMedia({
           video: true,
-          audio: true,
+          audio: false,
         })
         .then((stream) => {
           this.myVideoStream = stream;

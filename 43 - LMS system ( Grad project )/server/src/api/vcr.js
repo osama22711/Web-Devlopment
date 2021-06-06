@@ -190,7 +190,7 @@ class appService {
       // broadcast to all except sender
       socket.broadcast.emit('pdfNextPreviousPage', pageNumber, drawingData);
       // send data back to the sender
-      socket.to(roomId).emit('pdfNextPreviousPage', pageNumber, drawingData);
+      socket.emit('pdfNextPreviousPage', pageNumber, drawingData);
     });
     socket.on('pdfFile', ({ pdfName, pdfPages }) => {
       console.log(`Receiveing Data...`);
