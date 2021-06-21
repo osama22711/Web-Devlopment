@@ -22,3 +22,17 @@
 
             Extra (xl) large devices (large desktops, 1200px and up)
             @media (min-width: 1200px) { ... }
+
+
+Android splashscreen sizes:
+-480x320
+-800x480
+-480x320
+-1280x720
+-1600x960
+-1920x1280
+-480x800
+-320x480
+-720x1280
+-960x1600
+-1280x1920
